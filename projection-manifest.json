@@ -1,0 +1,61 @@
+{
+  "format": "ORANGEPEELIT_CATALOGUE_PROJECTION_V1",
+  "generated": true,
+  "authority": "OrangePeelIT Core",
+  "portfolioEntries": 6,
+  "coreBaseline": {
+    "records": 243,
+    "transactions": 11,
+    "graphNodes": 243,
+    "graphEdges": 572
+  },
+  "rules": {
+    "duplicateManualInventory": false,
+    "demonstrabilitySeparateFromMaturity": true,
+    "traceabilityRequired": true
+  },
+  "publicItems": [
+    {
+      "id": "org.orangepeelit.product.apex",
+      "label": "APEX",
+      "category": "Product",
+      "demonstrationStatus": "LIVE",
+      "demonstrationUrl": "https://apex.orangepeelit.co.uk"
+    },
+    {
+      "id": "org.orangepeelit.application.company",
+      "label": "company",
+      "category": "Application",
+      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "demonstrationUrl": null
+    },
+    {
+      "id": "org.orangepeelit.application.demo",
+      "label": "demo",
+      "category": "Application",
+      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "demonstrationUrl": null
+    },
+    {
+      "id": "org.orangepeelit.application.workbench",
+      "label": "Workbench",
+      "category": "Application",
+      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "demonstrationUrl": null
+    },
+    {
+      "id": "org.orangepeelit.utility.catalogue",
+      "label": "Catalogue",
+      "category": "Utility",
+      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "demonstrationUrl": null
+    },
+    {
+      "id": "org.orangepeelit.utility.graph",
+      "label": "Graph",
+      "category": "Utility",
+      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "demonstrationUrl": null
+    }
+  ]
+}

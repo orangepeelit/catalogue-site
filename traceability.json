@@ -1,0 +1,65 @@
+{
+  "format": "ORANGEPEELIT_CATALOGUE_TRACEABILITY_V1",
+  "generatedFrom": {
+    "core": "OrangePeelIT Core",
+    "records": 243,
+    "transactions": 11,
+    "graphNodes": 243,
+    "graphEdges": 572
+  },
+  "portfolio": {
+    "org.orangepeelit.product.apex": {
+      "identityRecord": "org.orangepeelit.product.apex",
+      "identityTransaction": "b9a98b81fa996362327aa229ab9eada72dee9b5f7d3869c7ee2997dfa1a1a65f",
+      "portfolioAssertion": "org.orangepeelit.claim.apex.portfolio",
+      "portfolioTransaction": "b9a98b81fa996362327aa229ab9eada72dee9b5f7d3869c7ee2997dfa1a1a65f",
+      "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.apex.v1",
+      "demonstrabilityTransaction": "b212b83d61fd0bece51557eb1e97554b364349df51e8e36e5f4c5c40efb6b05b"
+    },
+    "org.orangepeelit.application.company": {
+      "identityRecord": "org.orangepeelit.application.company",
+      "identityTransaction": "6128809c3bcd5de10457e21db8a646ea0900b0974dccf6fe26b9a042fbd6b2c1",
+      "portfolioAssertion": "org.orangepeelit.claim.company.portfolio",
+      "portfolioTransaction": "6128809c3bcd5de10457e21db8a646ea0900b0974dccf6fe26b9a042fbd6b2c1",
+      "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.company.v1",
+      "demonstrabilityTransaction": "b212b83d61fd0bece51557eb1e97554b364349df51e8e36e5f4c5c40efb6b05b"
+    },
+    "org.orangepeelit.application.demo": {
+      "identityRecord": "org.orangepeelit.application.demo",
+      "identityTransaction": "6128809c3bcd5de10457e21db8a646ea0900b0974dccf6fe26b9a042fbd6b2c1",
+      "portfolioAssertion": "org.orangepeelit.claim.demo.portfolio",
+      "portfolioTransaction": "6128809c3bcd5de10457e21db8a646ea0900b0974dccf6fe26b9a042fbd6b2c1",
+      "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.demo.v1",
+      "demonstrabilityTransaction": "b212b83d61fd0bece51557eb1e97554b364349df51e8e36e5f4c5c40efb6b05b"
+    },
+    "org.orangepeelit.application.workbench": {
+      "identityRecord": "org.orangepeelit.application.workbench",
+      "identityTransaction": "3d78de38cb2cda1864cb43787064c1d1ce3758a11abe3edf5ced288d26442e64",
+      "portfolioAssertion": "org.orangepeelit.claim.workbench.portfolio",
+      "portfolioTransaction": "3d78de38cb2cda1864cb43787064c1d1ce3758a11abe3edf5ced288d26442e64",
+      "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.workbench.v1",
+      "demonstrabilityTransaction": "b212b83d61fd0bece51557eb1e97554b364349df51e8e36e5f4c5c40efb6b05b"
+    },
+    "org.orangepeelit.utility.catalogue": {
+      "identityRecord": "org.orangepeelit.utility.catalogue",
+      "identityTransaction": "ac18d396e5f249c88b8c8eb7da3d72dd584008ee9d7025a1bc1f527d601a1e8b",
+      "portfolioAssertion": "org.orangepeelit.claim.catalogue.portfolio",
+      "portfolioTransaction": "ac18d396e5f249c88b8c8eb7da3d72dd584008ee9d7025a1bc1f527d601a1e8b",
+      "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.catalogue.v1",
+      "demonstrabilityTransaction": "b212b83d61fd0bece51557eb1e97554b364349df51e8e36e5f4c5c40efb6b05b"
+    },
+    "org.orangepeelit.utility.graph": {
+      "identityRecord": "org.orangepeelit.utility.graph",
+      "identityTransaction": "ac18d396e5f249c88b8c8eb7da3d72dd584008ee9d7025a1bc1f527d601a1e8b",
+      "portfolioAssertion": "org.orangepeelit.claim.graph.portfolio",
+      "portfolioTransaction": "ac18d396e5f249c88b8c8eb7da3d72dd584008ee9d7025a1bc1f527d601a1e8b",
+      "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.graph.v1",
+      "demonstrabilityTransaction": "b212b83d61fd0bece51557eb1e97554b364349df51e8e36e5f4c5c40efb6b05b"
+    }
+  },
+  "presentation": {
+    "builtOnApex": "org.orangepeelit.presentation.claim.built-on-apex-v1",
+    "typography": "org.orangepeelit.presentation.claim.typography-v1",
+    "colours": "org.orangepeelit.presentation.claim.colours-v1"
+  }
+}
