@@ -1,4 +1,4 @@
-﻿export function escapeHtml(value) {
+export function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -71,7 +71,7 @@ export function renderCatalogueTile(item) {
           href="${esc(item.demonstrationUrl)}"
         >
           Open ${esc(item.displayName)}
-          <span aria-hidden="true">→</span>
+          <span aria-hidden="true">&#8594;</span>
         </a>`
       : "";
 
