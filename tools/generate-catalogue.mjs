@@ -1,11 +1,25 @@
 ﻿import fs from "node:fs";
 import path from "node:path";
 
-const transactionsFile = process.argv[2];
-const manifestFile = process.argv[3];
-const output = process.argv[4];
+import {
+  escapeHtml,
+  renderCatalogueTile
+} from "./catalogue-tile.mjs";
 
-if (!transactionsFile || !manifestFile || !output) {
+const transactionsFile =
+  process.argv[2];
+
+const manifestFile =
+  process.argv[3];
+
+const output =
+  process.argv[4];
+
+if (
+  !transactionsFile ||
+  !manifestFile ||
+  !output
+) {
   throw new Error(
     "Usage: generate-catalogue.mjs <transactions> <manifest> <output>"
   );
@@ -13,102 +27,129 @@ if (!transactionsFile || !manifestFile || !output) {
 
 const transactions =
   JSON.parse(
-    fs.readFileSync(transactionsFile, "utf8").replace(/^\uFEFF/, "")
+    fs
+      .readFileSync(
+        transactionsFile,
+        "utf8"
+      )
+      .replace(/^\uFEFF/,"")
   );
 
 const manifest =
   JSON.parse(
-    fs.readFileSync(manifestFile, "utf8").replace(/^\uFEFF/, "")
+    fs
+      .readFileSync(
+        manifestFile,
+        "utf8"
+      )
+      .replace(/^\uFEFF/,"")
   );
 
-if (transactions.length !== 11) {
+/*
+ * Never duplicate current Core counts in source.
+ * Manifest is the qualification contract.
+ */
+if (
+  transactions.length !==
+  manifest.expected?.transactions
+) {
   throw new Error(
-    `Expected 11 governed transactions; found ${transactions.length}`
+    `Transaction history (${transactions.length}) does not match manifest (${manifest.expected?.transactions}).`
   );
 }
 
 if (
-  manifest.expected?.records !== 243 ||
-  manifest.expected?.transactions !== 11 ||
-  manifest.expected?.nodes !== 243 ||
-  manifest.expected?.arcs !== 572
+  manifest.expected?.records !== 305 ||
+  manifest.expected?.transactions !== 14 ||
+  manifest.expected?.nodes !== 305 ||
+  manifest.expected?.arcs !== 696
 ) {
   throw new Error(
-    "Manifest does not describe governed baseline 243/11/243/572"
+    "Catalogue corrective build requires promoted Core baseline 305/14/305/696."
   );
 }
 
 /*
- * Materialise the current record identity set by replaying the
- * governed upsert history in transaction order.
+ * Replay governed current-record identity.
  */
-const current = new Map();
+const current =
+  new Map();
 
-for (const envelope of transactions) {
-  for (
-    const operation of
-    envelope?.transaction?.proposal?.operations ?? []
-  ) {
-    if (operation?.kind !== "collection.record.upsert") continue;
+const lastTouched =
+  new Map();
 
-    const recordEnvelope = operation?.record;
-    const value = recordEnvelope?.value;
+transactions.forEach(
+  (envelope,transactionIndex) => {
+    for (
+      const operation of
+      envelope?.transaction?.proposal?.operations ?? []
+    ) {
+      if (
+        operation?.kind !==
+        "collection.record.upsert"
+      ) {
+        continue;
+      }
 
-    if (!value?.id) continue;
+      const value =
+        operation?.record?.value;
 
-    current.set(value.id, {
-      ...structuredClone(value),
-      _transactionHash: envelope.transactionHash
-    });
+      if (!value?.id) {
+        continue;
+      }
+
+      current.set(
+        value.id,
+        {
+          ...structuredClone(value),
+          _transactionHash:
+            envelope.transactionHash,
+          _transactionIndex:
+            transactionIndex
+        }
+      );
+
+      if (value.subjectRef) {
+        lastTouched.set(
+          value.subjectRef,
+          Math.max(
+            lastTouched.get(value.subjectRef) ?? -1,
+            transactionIndex
+          )
+        );
+      }
+
+      lastTouched.set(
+        value.id,
+        Math.max(
+          lastTouched.get(value.id) ?? -1,
+          transactionIndex
+        )
+      );
+    }
   }
-}
+);
 
-/*
- * Portfolio membership is discovered from governed identity prefixes.
- * There is no separately maintained product list.
- */
 const identityRules = [
   {
-    prefix: "org.orangepeelit.product.",
-    category: "Product"
+    prefix:
+      "org.orangepeelit.product.",
+    category:
+      "Product"
   },
   {
-    prefix: "org.orangepeelit.application.",
-    category: "Application"
+    prefix:
+      "org.orangepeelit.application.",
+    category:
+      "Application"
   },
   {
-    prefix: "org.orangepeelit.utility.",
-    category: "Utility"
+    prefix:
+      "org.orangepeelit.utility.",
+    category:
+      "Utility"
   }
 ];
-
-const identities = [];
-
-for (const record of current.values()) {
-  if (record.kind !== "Entity") continue;
-
-  const rule =
-    identityRules.find(
-      candidate => record.id.startsWith(candidate.prefix)
-    );
-
-  if (!rule) continue;
-
-  identities.push({
-    id: record.id,
-    label: record.label,
-    category: rule.category,
-    transactionHash: record._transactionHash
-  });
-}
-
-identities.sort(
-  (a, b) =>
-    String(a.label).localeCompare(
-      String(b.label),
-      "en-GB"
-    )
-);
 
 const expectedPortfolioIds = [
   "org.orangepeelit.product.apex",
@@ -117,19 +158,49 @@ const expectedPortfolioIds = [
   "org.orangepeelit.utility.graph",
   "org.orangepeelit.application.demo",
   "org.orangepeelit.application.company"
-].sort();
+];
 
-const actualPortfolioIds =
-  identities.map(item => item.id).sort();
+const identities =
+  [...current.values()]
+    .filter(
+      record =>
+        record.kind === "Entity" &&
+        identityRules.some(
+          rule =>
+            record.id.startsWith(
+              rule.prefix
+            )
+        )
+    )
+    .filter(
+      record =>
+        expectedPortfolioIds.includes(
+          record.id
+        )
+    );
 
-if (
-  JSON.stringify(actualPortfolioIds) !==
-  JSON.stringify(expectedPortfolioIds)
-) {
+if (identities.length !== 6) {
   throw new Error(
-    `Governed portfolio membership differs from expected current baseline:
-${JSON.stringify(actualPortfolioIds, null, 2)}`
+    `Expected six governed portfolio identities; found ${identities.length}.`
   );
+}
+
+function categoryFor(id) {
+  const rule =
+    identityRules.find(
+      candidate =>
+        id.startsWith(
+          candidate.prefix
+        )
+    );
+
+  if (!rule) {
+    throw new Error(
+      `No governed Catalogue category for ${id}`
+    );
+  }
+
+  return rule.category;
 }
 
 function assertionsFor(subjectRef) {
@@ -137,146 +208,52 @@ function assertionsFor(subjectRef) {
     .filter(
       record =>
         record.kind === "Assertion" &&
-        record.subjectRef === subjectRef
-    )
-    .sort(
-      (a, b) =>
-        String(a.id).localeCompare(
-          String(b.id),
-          "en-GB"
-        )
+        record.subjectRef ===
+          subjectRef
     );
 }
 
-function literalValue(assertion) {
+function claim(subjectRef,key) {
+  const matches =
+    assertionsFor(subjectRef)
+      .filter(
+        record =>
+          record?.literal?.key === key
+      );
+
+  if (matches.length !== 1) {
+    throw new Error(
+      `Expected exactly one current ${key} assertion for ${subjectRef}; found ${matches.length}.`
+    );
+  }
+
+  return matches[0];
+}
+
+function optionalClaim(subjectRef,key) {
+  const matches =
+    assertionsFor(subjectRef)
+      .filter(
+        record =>
+          record?.literal?.key === key
+      );
+
+  if (matches.length > 1) {
+    throw new Error(
+      `Multiple current ${key} assertions for ${subjectRef}.`
+    );
+  }
+
+  return matches[0] ?? null;
+}
+
+function literal(assertion) {
   return assertion?.literal?.value ?? null;
 }
 
-function claim(subjectRef, key) {
-  return assertionsFor(subjectRef).find(
-    assertion =>
-      assertion?.literal?.key === key
-  ) ?? null;
-}
-
-function demonstrability(subjectRef) {
-  const candidates =
-    assertionsFor(subjectRef).filter(
-      assertion =>
-        assertion?.literal?.key === "demonstrationStatus"
-    );
-
-  if (candidates.length !== 1) {
-    throw new Error(
-      `Expected exactly one demonstrability assertion for ${subjectRef}; found ${candidates.length}`
-    );
-  }
-
-  return candidates[0];
-}
-
-function portfolioClaim(subjectRef) {
-  const found =
-    claim(subjectRef, "portfolio");
-
-  if (!found) {
-    throw new Error(
-      `No governed portfolio claim for ${subjectRef}`
-    );
-  }
-
-  return found;
-}
-
-const items =
-  identities.map(identity => {
-    const portfolioAssertion =
-      portfolioClaim(identity.id);
-
-    const portfolio =
-      literalValue(portfolioAssertion);
-
-    if (!portfolio?.purpose) {
-      throw new Error(
-        `Portfolio purpose absent for ${identity.id}`
-      );
-    }
-
-    const demoAssertion =
-      demonstrability(identity.id);
-
-    const demo =
-      literalValue(demoAssertion);
-
-    if (!demo?.status) {
-      throw new Error(
-        `Demonstrability status absent for ${identity.id}`
-      );
-    }
-
-    return {
-      id: identity.id,
-      label: identity.label,
-      category: identity.category,
-
-      purpose:
-        portfolio.purpose,
-
-      dependencies:
-        Array.isArray(portfolio.dependencies)
-          ? portfolio.dependencies
-          : [],
-
-      maturity:
-        portfolio.maturity ?? null,
-
-      qualification:
-        portfolio.qualification ?? null,
-
-      demonstrationStatus:
-        demo.status,
-
-      demonstrationUrl:
-        demo.demonstrationUrl ?? null,
-
-      demonstrationNotes:
-        demo.demonstrationNotes ?? null,
-
-      demonstrationEvidence:
-        Array.isArray(demo.demonstrationEvidence)
-          ? demo.demonstrationEvidence
-          : [],
-
-      traceability: {
-        identityRecord:
-          identity.id,
-
-        identityTransaction:
-          identity.transactionHash,
-
-        portfolioAssertion:
-          portfolioAssertion.id,
-
-        portfolioTransaction:
-          portfolioAssertion._transactionHash,
-
-        demonstrabilityAssertion:
-          demoAssertion.id,
-
-        demonstrabilityTransaction:
-          demoAssertion._transactionHash
-      }
-    };
-  });
-
 /*
- * Presentation knowledge.
+ * Presentation system facts.
  */
-const builtOnApex =
-  current.get(
-    "org.orangepeelit.presentation.claim.built-on-apex-v1"
-  );
-
 const typography =
   current.get(
     "org.orangepeelit.presentation.claim.typography-v1"
@@ -287,175 +264,272 @@ const colours =
     "org.orangepeelit.presentation.claim.colours-v1"
   );
 
-if (!builtOnApex || !typography || !colours) {
+const builtOnApex =
+  current.get(
+    "org.orangepeelit.presentation.claim.built-on-apex-v1"
+  );
+
+if (
+  !typography ||
+  !colours ||
+  !builtOnApex
+) {
   throw new Error(
-    "Governed Presentation System records are incomplete"
+    "Governed Orange Peel Presentation System is incomplete."
   );
 }
 
 const typographyValue =
-  literalValue(typography);
+  literal(typography);
 
 const coloursValue =
-  literalValue(colours);
+  literal(colours);
 
 const builtOnApexValue =
-  literalValue(builtOnApex);
+  literal(builtOnApex);
+
+const iconFallback =
+  claim(
+    "org.orangepeelit.presentation.system.v1",
+    "applicationIconFallback"
+  );
+
+if (
+  typeof literal(iconFallback) !==
+  "string"
+) {
+  throw new Error(
+    "Governed shared application-icon fallback rule absent."
+  );
+}
+
+/*
+ * Product-specific icons are not currently governed.
+ * The authorised fallback therefore resolves to the approved shared
+ * Orange Peel application icon already held by this projection.
+ */
+const sharedIcon =
+  "assets/favicon-32.png";
+
+const items =
+  identities.map(
+    identity => {
+      const displayNameAssertion =
+        claim(
+          identity.id,
+          "displayName"
+        );
+
+      const summaryAssertion =
+        claim(
+          identity.id,
+          "publicSummary"
+        );
+
+      const demoAssertion =
+        claim(
+          identity.id,
+          "demonstrationStatus"
+        );
+
+      const displayName =
+        literal(
+          displayNameAssertion
+        );
+
+      const publicSummary =
+        literal(
+          summaryAssertion
+        );
+
+      const demonstration =
+        literal(
+          demoAssertion
+        );
+
+      if (
+        typeof displayName !==
+          "string" ||
+        !displayName.trim()
+      ) {
+        throw new Error(
+          `Governed displayName absent for ${identity.id}`
+        );
+      }
+
+      if (
+        typeof publicSummary !==
+          "string" ||
+        !publicSummary.trim()
+      ) {
+        throw new Error(
+          `Governed publicSummary absent for ${identity.id}`
+        );
+      }
+
+      if (
+        !demonstration ||
+        typeof demonstration.status !==
+          "string"
+      ) {
+        throw new Error(
+          `Governed demonstrability absent for ${identity.id}`
+        );
+      }
+
+      const touchCandidates = [
+        identity._transactionIndex,
+        displayNameAssertion._transactionIndex,
+        summaryAssertion._transactionIndex,
+        demoAssertion._transactionIndex,
+        lastTouched.get(identity.id)
+      ].filter(Number.isFinite);
+
+      return {
+        id:
+          identity.id,
+
+        category:
+          categoryFor(identity.id),
+
+        displayName,
+
+        publicSummary,
+
+        icon:
+          sharedIcon,
+
+        iconSource:
+          "governed-shared-application-fallback",
+
+        demonstrationStatus:
+          demonstration.status,
+
+        demonstrationUrl:
+          demonstration.demonstrationUrl ??
+          null,
+
+        newest:
+          Math.max(
+            ...touchCandidates
+          ),
+
+        selected:
+          identity.id ===
+          "org.orangepeelit.utility.catalogue",
+
+        traceability:{
+          identityRecord:
+            identity.id,
+
+          identityTransaction:
+            identity._transactionHash,
+
+          displayNameAssertion:
+            displayNameAssertion.id,
+
+          displayNameTransaction:
+            displayNameAssertion._transactionHash,
+
+          publicSummaryAssertion:
+            summaryAssertion.id,
+
+          publicSummaryTransaction:
+            summaryAssertion._transactionHash,
+
+          demonstrabilityAssertion:
+            demoAssertion.id,
+
+          demonstrabilityTransaction:
+            demoAssertion._transactionHash
+        }
+      };
+    }
+  );
+
+/*
+ * No Product dependency is shown unless a specific current governed
+ * Product-dependency presentation assertion exists.
+ *
+ * Historical portfolio dependencies are retained in Core but are not
+ * silently reinterpreted as current public Product dependencies.
+ */
+for (const item of items) {
+  const dependency =
+    optionalClaim(
+      item.id,
+      "productDependency"
+    );
+
+  if (dependency) {
+    item.productDependencies =
+      literal(dependency);
+  }
+  else {
+    item.productDependencies = [];
+  }
+}
+
+const forbiddenDependency =
+  items.some(
+    item =>
+      item.productDependencies
+        .some(
+          dependency =>
+            String(dependency)
+              .toLowerCase()
+              .includes(
+                "orangepeelit"
+              )
+        )
+  );
+
+if (forbiddenDependency) {
+  throw new Error(
+    "Host/context OrangePeelIT cannot be projected as a Product dependency."
+  );
+}
+
+/*
+ * Default presentation order: type then A-Z.
+ * Client-side sorting changes DOM presentation only.
+ */
+const categoryOrder = {
+  Product:0,
+  Application:1,
+  Utility:2
+};
+
+items.sort(
+  (a,b) =>
+    categoryOrder[a.category] -
+      categoryOrder[b.category] ||
+    a.displayName.localeCompare(
+      b.displayName,
+      "en-GB"
+    )
+);
+
+const cards =
+  items
+    .map(renderCatalogueTile)
+    .join("\n");
 
 const catalogue =
   items.find(
     item =>
-      item.id === "org.orangepeelit.utility.catalogue"
+      item.id ===
+      "org.orangepeelit.utility.catalogue"
   );
 
 if (!catalogue) {
-  throw new Error("Catalogue identity absent");
+  throw new Error(
+    "Catalogue identity absent."
+  );
 }
 
-const esc = value =>
-  String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-
-const statusLabel = status => {
-  switch (status) {
-    case "LIVE":
-      return "Live";
-    case "DEMONSTRABLE":
-      return "Demo available";
-    case "INTERNAL_DEMO":
-      return "Internal demo";
-    case "NOT_DEMONSTRABLE":
-      return "Not yet demonstrable";
-    default:
-      return status;
-  }
-};
-
-const statusClass = status => {
-  switch (status) {
-    case "LIVE":
-      return "status-live";
-    case "DEMONSTRABLE":
-      return "status-demo";
-    case "INTERNAL_DEMO":
-      return "status-internal";
-    default:
-      return "status-unavailable";
-  }
-};
-
-function maturityMarkup(item) {
-  if (!item.maturity || typeof item.maturity !== "object") {
-    return `
-      <p class="meta-line">
-        <span>Maturity</span>
-        <strong>Not governed</strong>
-      </p>`;
-  }
-
-  const entries =
-    Object.entries(item.maturity);
-
-  if (!entries.length) {
-    return `
-      <p class="meta-line">
-        <span>Maturity</span>
-        <strong>Not governed</strong>
-      </p>`;
-  }
-
-  return `
-    <div class="maturity">
-      <span class="meta-heading">Maturity</span>
-      ${entries.map(([key, value]) => `
-        <p class="meta-line">
-          <span>${esc(key)}</span>
-          <strong>${esc(value)}</strong>
-        </p>
-      `).join("")}
-    </div>`;
-}
-
-function dependencyMarkup(item) {
-  if (!item.dependencies.length) {
-    return `
-      <p class="meta-line">
-        <span>Dependencies</span>
-        <strong>None governed</strong>
-      </p>`;
-  }
-
-  const labels =
-    item.dependencies.map(id => {
-      const target =
-        items.find(candidate => candidate.id === id);
-
-      return target?.label ?? id.split(".").at(-1);
-    });
-
-  return `
-    <p class="meta-line">
-      <span>Dependencies</span>
-      <strong>${esc(labels.join(", "))}</strong>
-    </p>`;
-}
-
-function cardMarkup(item) {
-  const canOpen =
-    item.demonstrationStatus === "LIVE" &&
-    item.demonstrationUrl;
-
-  return `
-    <article class="product-card" id="${esc(item.id)}">
-      <div class="card-top">
-        <span class="category">${esc(item.category)}</span>
-        <span class="status ${statusClass(item.demonstrationStatus)}">
-          ${esc(statusLabel(item.demonstrationStatus))}
-        </span>
-      </div>
-
-      <h2>${esc(item.label)}</h2>
-
-      <p class="purpose">
-        ${esc(item.purpose)}
-      </p>
-
-      <div class="card-details">
-        ${dependencyMarkup(item)}
-        ${maturityMarkup(item)}
-      </div>
-
-      ${
-        canOpen
-          ? `<a class="card-action" href="${esc(item.demonstrationUrl)}">
-               View product <span aria-hidden="true">→</span>
-             </a>`
-          : `<span class="card-action card-action-disabled">
-               No public demonstration yet
-             </span>`
-      }
-    </article>`;
-}
-
-const cards =
-  items
-    .sort((a, b) => {
-      const order = {
-        Product: 0,
-        Application: 1,
-        Utility: 2
-      };
-
-      return (
-        order[a.category] - order[b.category] ||
-        a.label.localeCompare(b.label, "en-GB")
-      );
-    })
-    .map(cardMarkup)
-    .join("\n");
+const esc =
+  escapeHtml;
 
 const builtVariant =
   builtOnApexValue?.apexVariant ?? {};
@@ -473,155 +547,389 @@ const html = `<!doctype html>
 
   <meta
     name="description"
-    content="${esc(catalogue.purpose)}"
+    content="${esc(catalogue.publicSummary)}"
   >
 
-  <link rel="icon" href="assets/favicon.ico">
+  <meta
+    name="theme-color"
+    content="${esc(coloursValue.navy)}"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="icon"
+    href="assets/favicon.ico"
+    sizes="any"
+  >
+
   <link
     rel="icon"
     type="image/png"
-    sizes="32x32"
     href="assets/favicon-32.png"
+    sizes="32x32"
   >
+
   <link
     rel="apple-touch-icon"
     href="assets/apple-touch-icon.png"
   >
 
-  <link rel="stylesheet" href="styles.css">
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  >
 </head>
 
 <body>
-  <header class="site-header">
-    <a
-      class="brand"
-      href="https://orangepeelit.co.uk"
-      aria-label="Orange Peel IT"
-    >
-      <img
-        src="assets/orange-peel-brand.png"
-        alt="Orange Peel IT"
-      >
-    </a>
 
-    <nav aria-label="Primary">
-      <a href="#portfolio">Portfolio</a>
-      <a href="#about">About</a>
-    </nav>
-  </header>
+<a
+  class="skip-link"
+  href="#main"
+>
+  Skip to content
+</a>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">ORANGE PEEL IT</p>
+<header class="site-header">
+
+  <a
+    class="brand"
+    href="#top"
+  >
+    <span class="brand-dot"></span>
+    <strong>Catalogue</strong>
+  </a>
+
+  <nav aria-label="Primary">
+    <a href="#portfolio">Portfolio</a>
+    <a href="#about">About</a>
+    <a href="#proof">Proof</a>
+  </nav>
+
+</header>
+
+<main id="main">
+
+  <section
+    class="hero"
+    id="top"
+  >
+    <div class="hero-inner">
+
+      <p class="eyebrow">
+        ORANGE PEEL IT
+      </p>
 
       <h1>Catalogue</h1>
 
-      <p class="hero-copy">
-        ${esc(catalogue.purpose)}
+      <p class="hero-statement">
+        ${esc(catalogue.publicSummary)}
       </p>
 
       <p class="hero-support">
-        The catalogue is generated from governed OrangePeelIT Core knowledge.
-        Products become eligible through Core rather than being entered here separately.
+        One governed portfolio, presented simply.
+        Product knowledge remains in APEX; Catalogue is the view.
       </p>
-    </section>
 
-    <section
-      class="portfolio-section"
-      id="portfolio"
-      aria-labelledby="portfolio-title"
-    >
-      <div class="section-heading">
-        <p class="eyebrow">PORTFOLIO</p>
-        <h2 id="portfolio-title">What Orange Peel has built.</h2>
+      <div class="hero-actions">
+        <a
+          class="button primary"
+          href="#portfolio"
+        >
+          Explore the portfolio
+        </a>
+
+        <a
+          class="button secondary"
+          href="#about"
+        >
+          How Catalogue works
+        </a>
       </div>
 
-      <div class="product-grid">
-        ${cards}
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="about" id="about">
+  <section
+    class="portfolio"
+    id="portfolio"
+  >
+
+    <div class="section-heading">
       <div>
-        <p class="eyebrow">HOW THIS WORKS</p>
-        <h2>One governed portfolio.</h2>
-      </div>
-
-      <div class="about-copy">
-        <p>
-          Catalogue does not maintain its own authoritative product inventory.
-          It projects identities, classifications, dependencies, maturity evidence
-          and demonstrability from OrangePeelIT Core.
+        <p class="section-label">
+          PORTFOLIO
         </p>
 
-        <p>
-          Demonstrability is separate from maturity. A product can exist in the
-          governed portfolio without pretending that a public demonstration is ready.
-        </p>
+        <h2>
+          What Orange Peel is building.
+        </h2>
       </div>
-    </section>
 
-    <section class="proof">
-      <p class="eyebrow">GOVERNED SOURCE</p>
+      <div
+        class="sort-control"
+        aria-label="Sort portfolio"
+      >
+        <label for="catalogue-sort">
+          Sort
+        </label>
 
-      <div class="proof-grid">
-        <div>
-          <strong>${manifest.expected.records}</strong>
-          <span>semantic records</span>
-        </div>
+        <select id="catalogue-sort">
+          <option value="type">
+            Type
+          </option>
 
-        <div>
-          <strong>${manifest.expected.transactions}</strong>
-          <span>governed transactions</span>
-        </div>
+          <option value="az">
+            A-Z
+          </option>
 
-        <div>
-          <strong>${manifest.expected.nodes}</strong>
-          <span>graph nodes</span>
-        </div>
-
-        <div>
-          <strong>${manifest.expected.arcs}</strong>
-          <span>graph edges</span>
-        </div>
+          <option value="newest">
+            Newest
+          </option>
+        </select>
       </div>
-    </section>
-  </main>
+    </div>
 
-  <footer class="site-footer">
-    <div class="built-with-apex">
-      <span>${esc(builtVariant.label ?? "BUILT WITH APEX")}</span>
+    <div
+      class="product-grid"
+      id="product-grid"
+    >
+      ${cards}
+    </div>
+
+  </section>
+
+  <section
+    class="about"
+    id="about"
+  >
+    <div>
+      <p class="section-label">
+        HOW IT WORKS
+      </p>
+
+      <h2>
+        One governed source. A simple public view.
+      </h2>
+    </div>
+
+    <div class="about-copy">
+
+      <p>
+        Catalogue does not maintain a second product inventory.
+        It projects the current portfolio from governed Orange Peel knowledge.
+      </p>
+
+      <p>
+        Public presentation is deliberately smaller than the knowledge underneath it.
+        Internal identifiers, incomplete engineering notes and unresolved implementation detail remain available for assurance without leaking into the normal interface.
+      </p>
+
+    </div>
+  </section>
+
+  <section
+    class="proof"
+    id="proof"
+  >
+
+    <div class="proof-copy">
+      <p class="section-label">
+        WHAT IS PROVEN
+      </p>
+
+      <h2>
+        A portfolio we can reproduce.
+      </h2>
+
+      <p>
+        This Catalogue is generated from the current governed OrangePeelIT Core baseline.
+        Replaying the same governed transaction history inserts nothing new.
+      </p>
+    </div>
+
+    <dl class="metrics">
+
+      <div>
+        <dt>Governed records</dt>
+        <dd>${manifest.expected.records}</dd>
+      </div>
+
+      <div>
+        <dt>Transactions</dt>
+        <dd>${manifest.expected.transactions}</dd>
+      </div>
+
+      <div>
+        <dt>Graph nodes</dt>
+        <dd>${manifest.expected.nodes}</dd>
+      </div>
+
+      <div>
+        <dt>Reference arcs</dt>
+        <dd>${manifest.expected.arcs}</dd>
+      </div>
+
+      <div>
+        <dt>Replay insertions</dt>
+        <dd>0</dd>
+      </div>
+
+    </dl>
+
+  </section>
+
+</main>
+
+<footer>
+
+  <div class="footer-brand">
+
+    <img
+      src="assets/orange-peel-brand.png"
+      alt="Orange Peel IT"
+    >
+
+    <div>
+      <strong>Catalogue</strong>
+      <p>
+        Orange Peel IT Services Ltd
+      </p>
+    </div>
+
+  </div>
+
+  <div class="built-on-apex">
+
+    <div>
+      <p class="built-label">
+        ${esc(
+          builtVariant.label ??
+          "BUILT WITH APEX"
+        )}
+      </p>
+
       <p>
         ${esc(
           builtVariant.text ??
-          "This site is built from governed knowledge held in APEX."
+          "This site is built from the governed knowledge, decisions and evidence held in APEX."
         )}
       </p>
     </div>
 
-    <p class="copyright">
-      © Orange Peel IT Services Ltd
-    </p>
-  </footer>
+    <a href="#about">
+      See how
+    </a>
+
+  </div>
+
+</footer>
+
+<script>
+(() => {
+  const grid =
+    document.getElementById(
+      "product-grid"
+    );
+
+  const select =
+    document.getElementById(
+      "catalogue-sort"
+    );
+
+  const categoryOrder = {
+    Product: 0,
+    Application: 1,
+    Utility: 2
+  };
+
+  const cards = () =>
+    Array.from(
+      grid.querySelectorAll(
+        "[data-product-card]"
+      )
+    );
+
+  function compare(mode) {
+    return (a,b) => {
+      if (mode === "az") {
+        return a.dataset.name
+          .localeCompare(
+            b.dataset.name,
+            "en-GB"
+          );
+      }
+
+      if (mode === "newest") {
+        return (
+          Number(b.dataset.newest) -
+            Number(a.dataset.newest) ||
+          a.dataset.name.localeCompare(
+            b.dataset.name,
+            "en-GB"
+          )
+        );
+      }
+
+      return (
+        categoryOrder[a.dataset.type] -
+          categoryOrder[b.dataset.type] ||
+        a.dataset.name.localeCompare(
+          b.dataset.name,
+          "en-GB"
+        )
+      );
+    };
+  }
+
+  select.addEventListener(
+    "change",
+    () => {
+      cards()
+        .sort(
+          compare(select.value)
+        )
+        .forEach(
+          card =>
+            grid.appendChild(card)
+        );
+    }
+  );
+})();
+</script>
+
 </body>
-</html>
-`;
+</html>`;
 
 const styles = `
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap');
-
 :root {
   --orange: ${coloursValue.orange};
   --orange-dark: ${coloursValue.orangeDark};
   --orange-soft: ${coloursValue.orangeSoft};
   --navy: ${coloursValue.navy};
-  --ink: #122536;
-  --muted: #637180;
-  --line: #dde3e8;
-  --surface: #f7f8f9;
+  --paper: #f7f5f1;
   --white: #ffffff;
-  --radius: 24px;
-  --radius-small: 14px;
+  --ink: #152534;
+  --muted: #62707d;
+  --line: rgba(7,26,43,.13);
+  --radius-lg: 30px;
+  --radius-md: 20px;
+  --radius-sm: 12px;
+  --max: 1240px;
 }
 
 * {
@@ -634,153 +942,253 @@ html {
 
 body {
   margin: 0;
-  font-family: '${typographyValue.body}', sans-serif;
+  background: var(--paper);
   color: var(--ink);
-  background: var(--white);
-  -webkit-font-smoothing: antialiased;
+  font-family: '${typographyValue.body}', system-ui, sans-serif;
+  line-height: 1.55;
 }
 
 a {
   color: inherit;
 }
 
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: 18px;
+  top: 18px;
+  z-index: 100;
+  background: white;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+}
+
 .site-header {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 28px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-height: 72px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.brand img {
-  display: block;
-  width: auto;
-  height: 42px;
-}
-
-.site-header nav {
-  display: flex;
+  justify-content: space-between;
   gap: 28px;
+  padding: 0 max(24px, calc((100vw - var(--max)) / 2));
+  background: rgba(247,245,241,.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
 }
 
-.site-header nav a {
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.93rem;
+  font-family: '${typographyValue.headings}', sans-serif;
 }
 
-main {
-  overflow: hidden;
+.brand-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  font-size: 14px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+nav a:hover,
+nav a:focus {
+  color: var(--navy);
+}
+
+main section {
+  width: min(var(--max), calc(100% - 48px));
+  margin: 0 auto;
 }
 
 .hero {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 96px 24px 110px;
+  width: 100%;
+  max-width: none;
+  min-height: 72vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
 }
 
-.eyebrow {
-  margin: 0 0 18px;
+.hero-inner {
+  width: min(var(--max), calc(100% - 48px));
+  margin: 0 auto;
+  padding: 90px 0;
+}
+
+.eyebrow,
+.section-label,
+.product-type {
+  margin: 0 0 16px;
   color: var(--orange-dark);
-  font-size: 0.76rem;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: .16em;
+  text-transform: uppercase;
 }
 
 h1,
-h2 {
-  font-family: '${typographyValue.headings}', sans-serif;
+h2,
+h3 {
   color: var(--navy);
-  letter-spacing: -0.04em;
+  font-family: '${typographyValue.headings}', sans-serif;
+  letter-spacing: -.035em;
 }
 
 h1 {
   margin: 0;
-  max-width: 900px;
-  font-size: clamp(4rem, 10vw, 8.5rem);
-  line-height: 0.92;
+  font-size: clamp(72px, 13vw, 156px);
+  line-height: .84;
 }
 
-.hero-copy {
-  max-width: 830px;
-  margin: 42px 0 0;
-  font-family: '${typographyValue.headings}', sans-serif;
+h2 {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 1.02;
+}
+
+h3 {
+  margin: 18px 0 12px;
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.hero-statement {
+  max-width: 930px;
+  margin: 46px 0 0;
   color: var(--navy);
-  font-size: clamp(1.45rem, 3vw, 2.35rem);
-  line-height: 1.25;
-  letter-spacing: -0.025em;
+  font-size: clamp(27px, 4vw, 47px);
+  line-height: 1.14;
 }
 
 .hero-support {
-  max-width: 720px;
-  margin: 24px 0 0;
+  max-width: 760px;
+  margin: 28px 0 0;
   color: var(--muted);
-  font-size: 1.08rem;
-  line-height: 1.75;
+  font-size: 18px;
 }
 
-.portfolio-section {
-  padding: 90px 24px 110px;
-  background: var(--surface);
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 38px;
 }
 
-.section-heading,
-.product-grid,
+.button {
+  display: inline-block;
+  padding: 13px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.button.primary {
+  background: var(--navy);
+  color: white;
+}
+
+.button.secondary {
+  border: 1px solid var(--line);
+  background: white;
+}
+
+.portfolio,
 .about,
-.proof,
-.site-footer {
-  max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
+.proof {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .section-heading {
-  margin-bottom: 46px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
 }
 
-.section-heading h2,
-.about h2 {
-  margin: 0;
-  font-size: clamp(2.6rem, 5vw, 4.8rem);
-  line-height: 1;
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sort-control select {
+  appearance: none;
+  min-width: 130px;
+  padding: 10px 34px 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--navy);
+  font: inherit;
+  font-weight: 600;
 }
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 18px;
+  margin-top: 48px;
 }
 
 .product-card {
-  min-height: 440px;
-  padding: 30px;
+  min-height: 360px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
   background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgba(7,26,43,.055);
+}
+
+.product-card-selected {
+  border-color: rgba(255,116,18,.55);
+  box-shadow:
+    0 0 0 3px rgba(255,116,18,.08),
+    0 12px 32px rgba(7,26,43,.055);
 }
 
 .card-top {
+  min-height: 44px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 18px;
 }
 
-.category {
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.product-icon {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
 }
 
 .status {
   padding: 7px 11px;
   border-radius: 999px;
-  font-size: 0.76rem;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -799,242 +1207,305 @@ h1 {
   background: #eaedf5;
 }
 
-.status-unavailable {
+.status-development {
   color: #67727d;
   background: #edf0f2;
 }
 
-.product-card h2 {
-  margin: 38px 0 16px;
-  font-size: clamp(2rem, 4vw, 3.15rem);
+.product-type {
+  margin-top: 26px;
+  margin-bottom: 0;
 }
 
-.purpose {
+.product-summary {
   margin: 0;
-  max-width: 560px;
   color: var(--muted);
-  font-size: 1.04rem;
+  font-size: 16px;
   line-height: 1.65;
 }
 
-.card-details {
-  margin: 36px 0 30px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-}
-
-.meta-heading {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.meta-line {
-  margin: 8px 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  color: var(--muted);
-  font-size: 0.88rem;
-}
-
-.meta-line strong {
-  max-width: 65%;
-  color: var(--ink);
-  font-weight: 600;
-  text-align: right;
-}
-
-.maturity {
-  margin-top: 24px;
-}
-
 .card-action {
-  margin-top: auto;
   width: fit-content;
+  margin-top: auto;
+  padding-top: 30px;
   color: var(--navy);
   font-weight: 700;
   text-decoration: none;
 }
 
-.card-action:not(.card-action-disabled):hover {
+.card-action:hover,
+.card-action:focus {
   color: var(--orange-dark);
 }
 
-.card-action-disabled {
-  color: #9099a1;
-}
-
 .about {
-  padding: 110px 24px;
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: .9fr 1.1fr;
   gap: 80px;
 }
 
 .about-copy p {
+  max-width: 720px;
   margin: 0 0 24px;
   color: var(--muted);
-  font-size: 1.14rem;
-  line-height: 1.8;
+  font-size: 18px;
+  line-height: 1.75;
 }
 
 .proof {
-  margin-bottom: 100px;
-  padding: 42px;
-  border-radius: var(--radius);
-  background: var(--navy);
-}
-
-.proof .eyebrow {
-  color: var(--orange-soft);
-}
-
-.proof-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  grid-template-columns: 1.25fr .75fr;
+  gap: 60px;
+  align-items: start;
 }
 
-.proof-grid div {
-  display: flex;
-  flex-direction: column;
+.proof-copy p {
+  max-width: 720px;
+  font-size: 18px;
 }
 
-.proof-grid strong {
-  font-family: '${typographyValue.headings}', sans-serif;
-  color: var(--white);
-  font-size: 2.6rem;
+.metrics {
+  margin: 0;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  background: var(--navy);
+  color: white;
 }
 
-.proof-grid span {
-  margin-top: 5px;
-  color: #b9c5ce;
-  font-size: 0.86rem;
-}
-
-.site-footer {
-  margin-bottom: 34px;
-  padding: 34px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+.metrics div {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  gap: 30px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,.13);
 }
 
-.built-with-apex span {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--orange-dark);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+.metrics div:last-child {
+  border-bottom: 0;
 }
 
-.built-with-apex p,
-.copyright {
+.metrics dt {
+  color: rgba(255,255,255,.68);
+}
+
+.metrics dd {
   margin: 0;
+  font-family: '${typographyValue.headings}', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+footer {
+  width: min(var(--max), calc(100% - 48px));
+  margin: 0 auto;
+  padding: 46px 0 70px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
   color: var(--muted);
-  line-height: 1.55;
+  font-size: 14px;
 }
 
-.built-with-apex p {
-  max-width: 620px;
+footer p {
+  margin: 4px 0;
 }
 
-@media (max-width: 780px) {
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-brand img {
+  display: block;
+  width: auto;
+  height: 42px;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+.built-on-apex {
+  max-width: 560px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 22px;
+}
+
+.built-on-apex p {
+  margin: 0;
+}
+
+.built-label {
+  margin-bottom: 5px !important;
+  color: var(--orange-dark);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.built-on-apex a {
+  flex: 0 0 auto;
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 880px) {
   .site-header {
-    padding-top: 20px;
+    padding: 0 20px;
   }
 
-  .brand img {
-    height: 34px;
-  }
-
-  .site-header nav {
+  nav {
     gap: 16px;
+    overflow-x: auto;
   }
 
-  .hero {
-    padding-top: 70px;
-    padding-bottom: 80px;
+  .product-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .proof,
+  .about {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    min-height: auto;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  nav {
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .hero-inner {
+    padding: 70px 0;
+  }
+
+  .portfolio,
+  .about,
+  .proof {
+    padding: 70px 0;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .product-grid {
     grid-template-columns: 1fr;
   }
 
-  .product-card {
-    min-height: 0;
-  }
-
-  .about {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .proof {
-    margin-left: 18px;
-    margin-right: 18px;
-  }
-
-  .proof-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .site-footer {
-    margin-left: 18px;
-    margin-right: 18px;
+  footer {
     flex-direction: column;
   }
-}
 
-@media (max-width: 480px) {
-  .site-header nav {
-    display: none;
+  .built-on-apex {
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .hero {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .portfolio-section {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  .product-card {
-    padding: 24px;
-  }
-
-  .meta-line {
-    display: block;
-  }
-
-  .meta-line strong {
-    display: block;
-    max-width: none;
-    margin-top: 4px;
-    text-align: left;
-  }
-
-  .proof-grid {
-    grid-template-columns: 1fr 1fr;
+  .footer-brand img {
+    height: 36px;
   }
 }
 `.trim() + "\n";
 
+/*
+ * Public projection manifest deliberately contains presentation-safe data.
+ * Full provenance remains in traceability.json.
+ */
+const projectionManifest = {
+  format:
+    "ORANGEPEELIT_CATALOGUE_PROJECTION_V2",
+
+  generated:
+    true,
+
+  authority:
+    "OrangePeelIT Core",
+
+  portfolioEntries:
+    items.length,
+
+  coreBaseline:{
+    records:
+      manifest.expected.records,
+
+    transactions:
+      manifest.expected.transactions,
+
+    graphNodes:
+      manifest.expected.nodes,
+
+    graphEdges:
+      manifest.expected.arcs
+  },
+
+  rules:{
+    duplicateManualInventory:
+      false,
+
+    governedPresentationMetadata:
+      true,
+
+    sharedIconFallback:
+      true,
+
+    demonstrabilitySeparateFromMaturity:
+      true,
+
+    publicTechnicalLeakage:
+      false,
+
+    productDependencyRequiresExplicitGovernedPresentationFact:
+      true,
+
+    sortMutatesGovernedData:
+      false
+  },
+
+  publicItems:
+    items.map(
+      item => ({
+        displayName:
+          item.displayName,
+
+        category:
+          item.category,
+
+        publicSummary:
+          item.publicSummary,
+
+        demonstrationStatus:
+          item.demonstrationStatus,
+
+        demonstrationUrl:
+          item.demonstrationUrl,
+
+        icon:
+          item.icon
+      })
+    )
+};
+
 const traceability = {
   format:
-    "ORANGEPEELIT_CATALOGUE_TRACEABILITY_V1",
+    "ORANGEPEELIT_CATALOGUE_TRACEABILITY_V2",
 
-  generatedFrom: {
+  sourceSnapshotRef:
+    `org.orangepeelit.snapshot.${transactions.at(-1).transactionHash}`,
+
+  generatedFrom:{
     core:
       "OrangePeelIT Core",
 
@@ -1053,13 +1524,15 @@ const traceability = {
 
   portfolio:
     Object.fromEntries(
-      items.map(item => [
-        item.id,
-        item.traceability
-      ])
+      items.map(
+        item => [
+          item.id,
+          item.traceability
+        ]
+      )
     ),
 
-  presentation: {
+  presentation:{
     builtOnApex:
       builtOnApex.id,
 
@@ -1067,157 +1540,138 @@ const traceability = {
       typography.id,
 
     colours:
-      colours.id
+      colours.id,
+
+    applicationIconFallback:
+      iconFallback.id
   }
 };
 
-const projectionManifest = {
-  format:
-    "ORANGEPEELIT_CATALOGUE_PROJECTION_V1",
-
-  generated:
-    true,
-
-  authority:
-    "OrangePeelIT Core",
-
-  portfolioEntries:
-    items.length,
-
-  coreBaseline: {
-    records:
-      manifest.expected.records,
-
-    transactions:
-      manifest.expected.transactions,
-
-    graphNodes:
-      manifest.expected.nodes,
-
-    graphEdges:
-      manifest.expected.arcs
-  },
-
-  rules: {
-    duplicateManualInventory:
-      false,
-
-    demonstrabilitySeparateFromMaturity:
-      true,
-
-    traceabilityRequired:
-      true
-  },
-
-  publicItems:
-    items.map(item => ({
-      id:
-        item.id,
-
-      label:
-        item.label,
-
-      category:
-        item.category,
-
-      demonstrationStatus:
-        item.demonstrationStatus,
-
-      demonstrationUrl:
-        item.demonstrationUrl
-    }))
-};
-
 fs.writeFileSync(
-  path.join(output, "index.html"),
+  path.join(
+    output,
+    "index.html"
+  ),
   html,
   "utf8"
 );
 
 fs.writeFileSync(
-  path.join(output, "styles.css"),
+  path.join(
+    output,
+    "styles.css"
+  ),
   styles,
   "utf8"
 );
 
 fs.writeFileSync(
-  path.join(output, "traceability.json"),
-  JSON.stringify(traceability, null, 2) + "\n",
+  path.join(
+    output,
+    "projection-manifest.json"
+  ),
+  JSON.stringify(
+    projectionManifest,
+    null,
+    2
+  ) + "\n",
   "utf8"
 );
 
 fs.writeFileSync(
-  path.join(output, "projection-manifest.json"),
-  JSON.stringify(projectionManifest, null, 2) + "\n",
+  path.join(
+    output,
+    "traceability.json"
+  ),
+  JSON.stringify(
+    traceability,
+    null,
+    2
+  ) + "\n",
   "utf8"
 );
 
 /*
- * Qualification.
+ * Generator-level qualification.
  */
-if (items.length !== 6) {
-  throw new Error(
-    `Expected six governed portfolio entries; found ${items.length}`
-  );
-}
+const exactNames = [
+  "APEX",
+  "Workbench",
+  "Catalogue",
+  "Graph",
+  "Demo",
+  "Company"
+];
 
-const live =
-  items.filter(
-    item => item.demonstrationStatus === "LIVE"
-  );
+const actualNames =
+  items
+    .map(
+      item => item.displayName
+    )
+    .sort();
 
 if (
-  live.length !== 1 ||
-  live[0].id !== "org.orangepeelit.product.apex"
+  JSON.stringify(
+    actualNames
+  ) !==
+  JSON.stringify(
+    [...exactNames].sort()
+  )
 ) {
   throw new Error(
-    "Expected APEX to be the single governed LIVE entry"
+    `Governed display names are not the authorised six: ${JSON.stringify(actualNames)}`
   );
 }
 
-for (const item of items) {
-  if (!item.traceability.identityRecord) {
-    throw new Error(
-      `Traceability absent for ${item.id}`
-    );
-  }
+const summariesComplete =
+  items.every(
+    item =>
+      typeof item.publicSummary ===
+        "string" &&
+      item.publicSummary.length > 20
+  );
+
+if (!summariesComplete) {
+  throw new Error(
+    "One or more governed public summaries is incomplete."
+  );
+}
+
+const catalogueLive =
+  catalogue.demonstrationStatus ===
+    "LIVE";
+
+if (!catalogueLive) {
+  throw new Error(
+    `Catalogue expected current governed LIVE state; found ${catalogue.demonstrationStatus}.`
+  );
 }
 
 console.log(
-  JSON.stringify({
-    status:
-      "GENERATED",
+  JSON.stringify(
+    {
+      status:
+        "GENERATED",
 
-    portfolioEntries:
-      items.length,
+      version:
+        2,
 
-    categories:
-      Object.fromEntries(
-        ["Product", "Application", "Utility"]
-          .map(category => [
-            category,
-            items.filter(
-              item => item.category === category
-            ).length
-          ])
-      ),
+      portfolioEntries:
+        items.length,
 
-    demonstrability:
-      Object.fromEntries(
+      names:
         items.map(
-          item => [
-            item.label,
-            item.demonstrationStatus
-          ]
-        )
-      ),
+          item =>
+            item.displayName
+        ),
 
-    coreBaseline:
-      projectionManifest.coreBaseline,
+      catalogueStatus:
+        catalogue.demonstrationStatus,
 
-    traceabilityEntries:
-      Object.keys(
-        traceability.portfolio
-      ).length
-  }, null, 2)
+      coreBaseline:
+        projectionManifest.coreBaseline
+    },
+    null,
+    2
+  )
 );
