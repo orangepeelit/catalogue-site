@@ -58,14 +58,19 @@ if (
   );
 }
 
+const graphMetricValid =
+  value =>
+    Number.isInteger(value) ||
+    value === "Not recalculated";
+
 if (
   !Number.isInteger(manifest.expected?.records) ||
   !Number.isInteger(manifest.expected?.transactions) ||
-  !Number.isInteger(manifest.expected?.nodes) ||
-  !Number.isInteger(manifest.expected?.arcs)
+  !graphMetricValid(manifest.expected?.nodes) ||
+  !graphMetricValid(manifest.expected?.arcs)
 ) {
   throw new Error(
-    "Catalogue corrective build requires promoted Core baseline 305/14/305/696."
+    "Catalogue requires current record/transaction counts and an explicit graph metric state."
   );
 }
 
@@ -151,14 +156,10 @@ const identityRules = [
   }
 ];
 
-const expectedPortfolioIds = [
-  "org.orangepeelit.product.apex",
-  "org.orangepeelit.application.workbench",
-  "org.orangepeelit.utility.catalogue",
-  "org.orangepeelit.utility.graph",
-  "org.orangepeelit.application.demo",
-  "org.orangepeelit.application.company"
-];
+/*
+ * Portfolio membership is derived from governed Entity identity prefixes.
+ * No duplicate fixed Product inventory is maintained by Catalogue.
+ */
 
 const identities =
   [...current.values()]
@@ -171,17 +172,11 @@ const identities =
               rule.prefix
             )
         )
-    )
-    .filter(
-      record =>
-        expectedPortfolioIds.includes(
-          record.id
-        )
     );
 
-if (identities.length !== 6) {
+if (identities.length === 0) {
   throw new Error(
-    `Expected six governed portfolio identities; found ${identities.length}.`
+    "No governed portfolio identities were found."
   );
 }
 
@@ -1594,34 +1589,10 @@ fs.writeFileSync(
 /*
  * Generator-level qualification.
  */
-const exactNames = [
-  "APEX",
-  "Workbench",
-  "Catalogue",
-  "Graph",
-  "Demo",
-  "Company"
-];
-
-const actualNames =
-  items
-    .map(
-      item => item.displayName
-    )
-    .sort();
-
-if (
-  JSON.stringify(
-    actualNames
-  ) !==
-  JSON.stringify(
-    [...exactNames].sort()
-  )
-) {
-  throw new Error(
-    `Governed display names are not the authorised six: ${JSON.stringify(actualNames)}`
-  );
-}
+/*
+ * Display names are governed presentation facts.
+ * Catalogue does not maintain a second authorised-name inventory.
+ */
 
 const summariesComplete =
   items.every(

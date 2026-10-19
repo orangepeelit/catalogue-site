@@ -1,12 +1,12 @@
-﻿{
+{
   "format": "ORANGEPEELIT_CATALOGUE_TRACEABILITY_V2",
-  "sourceSnapshotRef": "org.orangepeelit.snapshot.59a4e0cbdd9806b3cc568d9b02d9b7ce2008d9872c97c686c02aac4b08cbe81d",
+  "sourceSnapshotRef": "org.orangepeelit.snapshot.8676afd9df501ce9b314925c2780a5cd1a7079057c97a073e5aa5c403cc10bda",
   "generatedFrom": {
     "core": "OrangePeelIT Core",
-    "records": 305,
-    "transactions": 14,
-    "graphNodes": 305,
-    "graphEdges": 696
+    "records": 334,
+    "transactions": 10149,
+    "graphNodes": "Not recalculated",
+    "graphEdges": "Not recalculated"
   },
   "portfolio": {
     "org.orangepeelit.product.apex": {
@@ -68,6 +68,16 @@
       "publicSummaryTransaction": "59a4e0cbdd9806b3cc568d9b02d9b7ce2008d9872c97c686c02aac4b08cbe81d",
       "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.graph.v1",
       "demonstrabilityTransaction": "b212b83d61fd0bece51557eb1e97554b364349df51e8e36e5f4c5c40efb6b05b"
+    },
+    "org.orangepeelit.utility.relay": {
+      "identityRecord": "org.orangepeelit.utility.relay",
+      "identityTransaction": "a0f33b9c6cc57331f3f28411385e2ee7dad1cdd6eb0161f8af251f1ece7fea06",
+      "displayNameAssertion": "org.orangepeelit.utility.relay.presentation.display-name.v1",
+      "displayNameTransaction": "a530027cde338e039b7040d01514c01cef8c65eb190cb1b1daca303dff2125a0",
+      "publicSummaryAssertion": "org.orangepeelit.utility.relay.presentation.public-summary.v1",
+      "publicSummaryTransaction": "a530027cde338e039b7040d01514c01cef8c65eb190cb1b1daca303dff2125a0",
+      "demonstrabilityAssertion": "org.orangepeelit.catalogue.demonstrability.relay.v1",
+      "demonstrabilityTransaction": "a0f33b9c6cc57331f3f28411385e2ee7dad1cdd6eb0161f8af251f1ece7fea06"
     }
   },
   "presentation": {

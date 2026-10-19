@@ -1,13 +1,13 @@
-﻿{
+{
   "format": "ORANGEPEELIT_CATALOGUE_PROJECTION_V2",
   "generated": true,
   "authority": "OrangePeelIT Core",
-  "portfolioEntries": 6,
+  "portfolioEntries": 7,
   "coreBaseline": {
-    "records": 305,
-    "transactions": 14,
-    "graphNodes": 305,
-    "graphEdges": 696
+    "records": 334,
+    "transactions": 10149,
+    "graphNodes": "Not recalculated",
+    "graphEdges": "Not recalculated"
   },
   "rules": {
     "duplicateManualInventory": false,
@@ -63,6 +63,14 @@
       "displayName": "Graph",
       "category": "Utility",
       "publicSummary": "Provides a visual way to inspect governed entities, relationships, evidence and provenance held in APEX.",
+      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "demonstrationUrl": null,
+      "icon": "assets/favicon-32.png"
+    },
+    {
+      "displayName": "Relay",
+      "category": "Utility",
+      "publicSummary": "Transports governed proposals from Orange Peel applications and utilities into APEX Core without owning authority or persistence.",
       "demonstrationStatus": "NOT_DEMONSTRABLE",
       "demonstrationUrl": null,
       "icon": "assets/favicon-32.png"
