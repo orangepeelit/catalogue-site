@@ -1,8 +1,7 @@
 ﻿import fs from "node:fs";
 import path from "node:path";
 
-const output =
-  process.argv[2];
+const output = process.argv[2];
 
 if (!output) {
   throw new Error(
@@ -16,14 +15,12 @@ const coreUrl =
 
 
 async function readJson(url) {
-
   const response =
     await fetch(
       url,
       {
         headers: {
-          accept:
-            "application/json"
+          accept: "application/json"
         }
       }
     );
@@ -39,7 +36,6 @@ async function readJson(url) {
 
 
 function unwrapRecord(operation) {
-
   let value =
     operation?.record ?? null;
 
@@ -48,7 +44,6 @@ function unwrapRecord(operation) {
     depth < 8;
     depth++
   ) {
-
     if (!value) {
       return null;
     }
@@ -61,20 +56,16 @@ function unwrapRecord(operation) {
     }
 
     if (
-      typeof value?.value === "object"
+      typeof value?.record === "object"
     ) {
-      value =
-        value.value;
-
+      value = value.record;
       continue;
     }
 
     if (
-      typeof value?.record === "object"
+      typeof value?.value === "object"
     ) {
-      value =
-        value.record;
-
+      value = value.value;
       continue;
     }
 
@@ -85,6 +76,48 @@ function unwrapRecord(operation) {
 }
 
 
+function esc(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+
+function normaliseLifecycle(value) {
+  const text =
+    String(value ?? "UNKNOWN")
+      .trim()
+      .toUpperCase()
+      .replaceAll("_", " ");
+
+  const map = {
+    BACKLOG: "BACKLOG",
+    PRIORITISED: "PRIORITISED",
+    PRIORITIZED: "PRIORITISED",
+    "IN BUILD": "IN BUILD",
+    DEPLOYED: "DEPLOYED",
+    UNKNOWN: "UNKNOWN"
+  };
+
+  return map[text] ?? "UNKNOWN";
+}
+
+
+function lifecycleLabel(value) {
+  return {
+    BACKLOG: "Backlog",
+    PRIORITISED: "Prioritised",
+    "IN BUILD": "In Build",
+    DEPLOYED: "Deployed",
+    UNKNOWN: "Status unknown"
+  }[
+    normaliseLifecycle(value)
+  ];
+}
+
+
 const head =
   await readJson(
     `${coreUrl}/v1/core/head`
@@ -92,11 +125,9 @@ const head =
 
 
 const transactions = [];
-
 let after = 0;
 
 while (true) {
-
   const page =
     await readJson(
       `${coreUrl}/v1/core/transactions?after=${after}&limit=500`
@@ -109,17 +140,13 @@ while (true) {
     break;
   }
 
-  transactions.push(
-    ...rows
-  );
+  transactions.push(...rows);
 
   after =
     Math.max(
       ...rows.map(
         row =>
-          Number(
-            row.checkpoint
-          )
+          Number(row.checkpoint)
       )
     );
 
@@ -135,11 +162,11 @@ const current =
 const provenance =
   new Map();
 
+
 for (
   const transaction
   of transactions
 ) {
-
   for (
     const operation
     of transaction
@@ -147,7 +174,6 @@ for (
       ?.proposal
       ?.operations ?? []
   ) {
-
     if (
       operation?.kind !==
       "collection.record.upsert"
@@ -156,9 +182,7 @@ for (
     }
 
     const record =
-      unwrapRecord(
-        operation
-      );
+      unwrapRecord(operation);
 
     if (!record?.id) {
       continue;
@@ -187,10 +211,7 @@ const records =
   [...current.values()];
 
 
-function isKind(
-  record,
-  kind
-) {
+function isKind(record, kind) {
   return (
     String(
       record?.kind ?? ""
@@ -200,129 +221,9 @@ function isKind(
 }
 
 
-const identityRules = [
-  {
-    prefix:
-      "org.orangepeelit.product.",
-    category:
-      "Product"
-  },
-  {
-    prefix:
-      "org.orangepeelit.application.",
-    category:
-      "Application"
-  },
-  {
-    prefix:
-      "org.orangepeelit.utility.",
-    category:
-      "Utility"
-  }
-];
-
-
-const identities =
-  records.filter(
-    record =>
-      isKind(
-        record,
-        "Entity"
-      ) &&
-      identityRules.some(
-        rule =>
-          record.id.startsWith(
-            rule.prefix
-          )
-      )
-  );
-
-
-if (!identities.length) {
-  throw new Error(
-    "Hosted APEX contains no public portfolio identities."
-  );
-}
-
-
-function categoryFor(id) {
-
-  const rule =
-    identityRules.find(
-      candidate =>
-        id.startsWith(
-          candidate.prefix
-        )
-    );
-
-  if (!rule) {
-    throw new Error(
-      `No portfolio category for ${id}`
-    );
-  }
-
-  return rule.category;
-}
-
-
-function assertionsFor(
-  subjectRef
-) {
-  return records.filter(
-    record =>
-      isKind(
-        record,
-        "Assertion"
-      ) &&
-      record.subjectRef ===
-        subjectRef
-  );
-}
-
-
-function claim(
-  subjectRef,
-  key
-) {
-
-  const matches =
-    assertionsFor(
-      subjectRef
-    ).filter(
-      record =>
-        record?.literal?.key ===
-        key
-    );
-
-  if (matches.length !== 1) {
-    throw new Error(
-      `Expected one ${key} assertion for ${subjectRef}; found ${matches.length}.`
-    );
-  }
-
-  return matches[0];
-}
-
-
-function literal(
-  assertion
-) {
-  return (
-    assertion
-      ?.literal
-      ?.value ??
-    null
-  );
-}
-
-
 function recordValue(id) {
-
-  const record =
-    current.get(id);
-
   return (
-    record
+    current.get(id)
       ?.literal
       ?.value ??
     null
@@ -335,12 +236,10 @@ const shell =
     "org.orangepeelit.presentation.microsite-shell.v1"
   );
 
-
 const typography =
   recordValue(
     "org.orangepeelit.presentation.claim.typography-v1"
   );
-
 
 const colours =
   recordValue(
@@ -359,11 +258,77 @@ if (
 }
 
 
-const items =
-  identities
+const legacyRules = [
+  {
+    prefix: "org.orangepeelit.product.",
+    category: "Product"
+  },
+  {
+    prefix: "org.orangepeelit.application.",
+    category: "Application"
+  },
+  {
+    prefix: "org.orangepeelit.utility.",
+    category: "Utility"
+  }
+];
+
+
+function legacyCategory(id) {
+  return (
+    legacyRules.find(
+      rule =>
+        id.startsWith(rule.prefix)
+    )?.category ??
+    null
+  );
+}
+
+
+function assertionsFor(subjectRef) {
+  return records.filter(
+    record =>
+      isKind(record, "Assertion") &&
+      record.subjectRef === subjectRef
+  );
+}
+
+
+function claim(subjectRef, key) {
+  const matches =
+    assertionsFor(subjectRef)
+      .filter(
+        record =>
+          record?.literal?.key === key
+      );
+
+  if (matches.length !== 1) {
+    return null;
+  }
+
+  return matches[0];
+}
+
+
+function literal(record) {
+  return (
+    record
+      ?.literal
+      ?.value ??
+    null
+  );
+}
+
+
+const legacyItems =
+  records
+    .filter(
+      record =>
+        isKind(record, "Entity") &&
+        legacyCategory(record.id)
+    )
     .map(
       identity => {
-
         const display =
           claim(
             identity.id,
@@ -382,127 +347,236 @@ const items =
             "demonstrationStatus"
           );
 
-        const demonstrationValue =
-          literal(
-            demonstration
-          );
+        if (
+          !display ||
+          !summary
+        ) {
+          return null;
+        }
+
+        const demo =
+          literal(demonstration);
+
+        const live =
+          demo?.status === "LIVE";
 
         return {
           id:
             identity.id,
 
           category:
-            categoryFor(
+            legacyCategory(
               identity.id
             ),
 
           displayName:
-            literal(
-              display
-            ),
+            literal(display),
 
           publicSummary:
-            literal(
-              summary
-            ),
+            literal(summary),
+
+          lifecycleState:
+            live
+              ? "DEPLOYED"
+              : "UNKNOWN",
 
           demonstrationStatus:
-            demonstrationValue
-              ?.status ??
+            demo?.status ??
             "NOT_DEMONSTRABLE",
 
           demonstrationUrl:
-            demonstrationValue
-              ?.demonstrationUrl ??
+            demo?.demonstrationUrl ??
             null,
+
+          sourceModel:
+            "legacy-entity-assertions",
 
           provenance: {
             identity:
-              provenance.get(
-                identity.id
-              ),
+              provenance.get(identity.id),
 
             displayName:
-              provenance.get(
-                display.id
-              ),
+              provenance.get(display.id),
 
             publicSummary:
-              provenance.get(
-                summary.id
-              ),
+              provenance.get(summary.id),
 
             demonstration:
-              provenance.get(
-                demonstration.id
-              )
+              demonstration
+                ? provenance.get(
+                    demonstration.id
+                  )
+                : null
           }
         };
       }
     )
-    .sort(
-      (a,b) => {
+    .filter(Boolean);
 
+
+const directItems =
+  records
+    .filter(
+      record =>
+        [
+          "product",
+          "application",
+          "utility"
+        ].includes(
+          String(
+            record?.kind ?? ""
+          ).toLowerCase()
+        ) &&
+        String(
+          record?.id ?? ""
+        ).startsWith(
+          "org.orangepeelit.product."
+        )
+    )
+    .map(
+      record => ({
+        id:
+          record.id,
+
+        category:
+          String(record.kind),
+
+        displayName:
+          record.name ??
+          record.title ??
+          record.id,
+
+        publicSummary:
+          record.statement ??
+          "",
+
+        lifecycleState:
+          normaliseLifecycle(
+            record.lifecycleState
+          ),
+
+        demonstrationStatus:
+          null,
+
+        demonstrationUrl:
+          record.demonstrationUrl ??
+          record.url ??
+          null,
+
+        sourceModel:
+          "direct-portfolio-record",
+
+        provenance: {
+          identity:
+            provenance.get(record.id)
+        }
+      })
+    );
+
+
+const merged =
+  new Map();
+
+
+for (
+  const item
+  of legacyItems
+) {
+  merged.set(
+    String(
+      item.displayName
+    ).toLowerCase(),
+    item
+  );
+}
+
+
+for (
+  const item
+  of directItems
+) {
+  const key =
+    String(
+      item.displayName
+    ).toLowerCase();
+
+  const previous =
+    merged.get(key);
+
+  merged.set(
+    key,
+    {
+      ...previous,
+      ...item,
+
+      demonstrationUrl:
+        item.demonstrationUrl ??
+        previous?.demonstrationUrl ??
+        null,
+
+      demonstrationStatus:
+        item.demonstrationStatus ??
+        previous?.demonstrationStatus ??
+        null,
+
+      provenance: {
+        ...(previous?.provenance ?? {}),
+        ...(item.provenance ?? {})
+      }
+    }
+  );
+}
+
+
+const items =
+  [...merged.values()]
+    .sort(
+      (a, b) => {
         const order = {
-          Product:0,
-          Application:1,
-          Utility:2
+          Product: 0,
+          Application: 1,
+          Utility: 2
         };
 
         return (
-          order[a.category] -
-            order[b.category] ||
-          a.displayName.localeCompare(
-            b.displayName,
-            "en-GB"
-          )
+          (order[a.category] ?? 99) -
+            (order[b.category] ?? 99) ||
+          String(a.displayName)
+            .localeCompare(
+              String(b.displayName),
+              "en-GB"
+            )
         );
       }
     );
 
 
-function esc(value) {
-
-  return String(
-    value ?? ""
-  )
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    );
+if (!items.length) {
+  throw new Error(
+    "Hosted APEX contains no portfolio records."
+  );
 }
 
 
 function card(item) {
-
-  const live =
-    item.demonstrationStatus ===
-    "LIVE";
+  const lifecycle =
+    normaliseLifecycle(
+      item.lifecycleState
+    );
 
   const status =
-    live
-      ? "Live"
-      : "Not yet demonstrable";
+    lifecycleLabel(
+      lifecycle
+    );
 
   const statusClass =
-    live
-      ? "status-live"
-      : "status-development";
+    "status-" +
+    lifecycle
+      .toLowerCase()
+      .replaceAll(" ", "-");
 
   const action =
-    live &&
+    lifecycle === "DEPLOYED" &&
     item.demonstrationUrl
       ? `
         <a
@@ -529,6 +603,9 @@ function card(item) {
       data-type="${esc(
         item.category
       )}"
+      data-lifecycle="${esc(
+        lifecycle
+      )}"
     >
 
       <div class="card-top">
@@ -544,27 +621,21 @@ function card(item) {
         <span
           class="status ${statusClass}"
         >
-          ${status}
+          ${esc(status)}
         </span>
 
       </div>
 
       <p class="product-type">
-        ${esc(
-          item.category
-        )}
+        ${esc(item.category)}
       </p>
 
       <h3>
-        ${esc(
-          item.displayName
-        )}
+        ${esc(item.displayName)}
       </h3>
 
       <p class="product-summary">
-        ${esc(
-          item.publicSummary
-        )}
+        ${esc(item.publicSummary)}
       </p>
 
       ${action}
@@ -575,7 +646,7 @@ function card(item) {
 
 
 const html = `<!doctype html>
-<html lang="en">
+<html lang="en-GB">
 
 <head>
 
@@ -623,7 +694,7 @@ const html = `<!doctype html>
     <strong>Catalogue</strong>
   </a>
 
-  <nav>
+  <nav aria-label="Primary">
     <a href="#portfolio">Portfolio</a>
     <a href="#about">About</a>
   </nav>
@@ -647,12 +718,12 @@ const html = `<!doctype html>
     <h1>Catalogue</h1>
 
     <p class="hero-statement">
-      Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge.
+      Products, applications and utilities from the governed Orange Peel portfolio.
     </p>
 
     <p class="hero-support">
-      One governed portfolio, presented simply.
-      Product knowledge remains in APEX; Catalogue is the view.
+      What exists, what is planned and where it is in delivery.
+      APEX remains the authority; Catalogue is the view.
     </p>
 
   </div>
@@ -706,7 +777,7 @@ const html = `<!doctype html>
 
     <h2>
       One governed source.
-      A simple public view.
+      Different useful views.
     </h2>
 
   </div>
@@ -714,12 +785,13 @@ const html = `<!doctype html>
   <div class="about-copy">
 
     <p>
-      Catalogue does not maintain a second product inventory.
-      It projects the current portfolio from governed Orange Peel knowledge.
+      Catalogue does not maintain a separate product inventory.
+      It projects the current portfolio directly from APEX.
     </p>
 
     <p>
-      Public presentation remains deliberately smaller than the knowledge underneath it.
+      Backlog, prioritised, in-build and deployed state comes from governed product knowledge.
+      Test evidence remains separate from delivery state.
     </p>
 
   </div>
@@ -760,21 +832,17 @@ const html = `<!doctype html>
 
   <div class="built-on-apex">
 
-    <div>
+    <p class="built-label">
+      ${esc(
+        shell.builtWithLabel
+      )}
+    </p>
 
-      <p class="built-label">
-        ${esc(
-          shell.builtWithLabel
-        )}
-      </p>
-
-      <p>
-        ${esc(
-          shell.builtWithText
-        )}
-      </p>
-
-    </div>
+    <p>
+      ${esc(
+        shell.builtWithText
+      )}
+    </p>
 
   </div>
 
@@ -953,7 +1021,7 @@ main section {
     none;
 
   min-height:
-    72vh;
+    64vh;
 
   display:
     flex;
@@ -1137,8 +1205,7 @@ h3 {
     20px;
 
   box-shadow:
-    0 12px 32px
-    rgba(7,26,43,.055);
+    0 12px 32px rgba(7,26,43,.055);
 }
 
 .card-top {
@@ -1180,7 +1247,7 @@ h3 {
     700;
 }
 
-.status-live {
+.status-deployed {
   color:
     #17633a;
 
@@ -1188,7 +1255,31 @@ h3 {
     #e5f5eb;
 }
 
-.status-development {
+.status-backlog {
+  color:
+    #675317;
+
+  background:
+    #f7f0d9;
+}
+
+.status-prioritised {
+  color:
+    #6b3a16;
+
+  background:
+    #fff0e4;
+}
+
+.status-in-build {
+  color:
+    #24527a;
+
+  background:
+    #e8f1f8;
+}
+
+.status-unknown {
   color:
     #67727d;
 
@@ -1340,7 +1431,6 @@ h3 {
 }
 
 @media (max-width:880px) {
-
   .product-grid {
     grid-template-columns:
       1fr 1fr;
@@ -1353,6 +1443,15 @@ h3 {
 }
 
 @media (max-width:600px) {
+  .site-header {
+    gap:
+      16px;
+  }
+
+  nav {
+    gap:
+      14px;
+  }
 
   .product-grid {
     grid-template-columns:
@@ -1369,7 +1468,7 @@ h3 {
 
 const manifest = {
   format:
-    "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V1",
+    "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V2",
 
   generatedFrom:
     "hosted-apex-core",
@@ -1386,6 +1485,9 @@ const manifest = {
   publicItems:
     items.map(
       item => ({
+        id:
+          item.id,
+
         displayName:
           item.displayName,
 
@@ -1395,11 +1497,17 @@ const manifest = {
         publicSummary:
           item.publicSummary,
 
+        lifecycleState:
+          item.lifecycleState,
+
         demonstrationStatus:
           item.demonstrationStatus,
 
         demonstrationUrl:
-          item.demonstrationUrl
+          item.demonstrationUrl,
+
+        sourceModel:
+          item.sourceModel
       })
     )
 };
@@ -1407,7 +1515,7 @@ const manifest = {
 
 const traceability = {
   format:
-    "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V1",
+    "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V2",
 
   checkpoint:
     head.checkpoint,
@@ -1420,7 +1528,16 @@ const traceability = {
       items.map(
         item => [
           item.id,
-          item.provenance
+          {
+            lifecycleState:
+              item.lifecycleState,
+
+            sourceModel:
+              item.sourceModel,
+
+            provenance:
+              item.provenance
+          }
         ]
       )
     ),
@@ -1438,6 +1555,14 @@ const traceability = {
 };
 
 
+fs.mkdirSync(
+  output,
+  {
+    recursive: true
+  }
+);
+
+
 fs.writeFileSync(
   path.join(
     output,
@@ -1447,6 +1572,7 @@ fs.writeFileSync(
   "utf8"
 );
 
+
 fs.writeFileSync(
   path.join(
     output,
@@ -1455,6 +1581,7 @@ fs.writeFileSync(
   styles,
   "utf8"
 );
+
 
 fs.writeFileSync(
   path.join(
@@ -1468,6 +1595,7 @@ fs.writeFileSync(
   ) + "\n",
   "utf8"
 );
+
 
 fs.writeFileSync(
   path.join(
@@ -1492,11 +1620,33 @@ console.log(
       checkpoint:
         head.checkpoint,
 
+      transactionHash:
+        head.transactionHash,
+
       records:
         current.size,
 
       transactions:
         transactions.length,
+
+      portfolioEntries:
+        items.length,
+
+      lifecycleCounts:
+        items.reduce(
+          (result, item) => {
+            const key =
+              normaliseLifecycle(
+                item.lifecycleState
+              );
+
+            result[key] =
+              (result[key] ?? 0) + 1;
+
+            return result;
+          },
+          {}
+        ),
 
       portfolio:
         items.map(
@@ -1504,11 +1654,14 @@ console.log(
             name:
               item.displayName,
 
-            status:
-              item.demonstrationStatus,
+            type:
+              item.category,
 
-            url:
-              item.demonstrationUrl
+            lifecycle:
+              item.lifecycleState,
+
+            source:
+              item.sourceModel
           })
         )
     },

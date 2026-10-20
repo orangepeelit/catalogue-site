@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 
 <head>
 
@@ -30,7 +30,7 @@
 
 <link
   rel="stylesheet"
-  href="styles.css?v=5"
+  href="styles.css?v=14"
 >
 
 </head>
@@ -47,7 +47,7 @@
     <strong>Catalogue</strong>
   </a>
 
-  <nav>
+  <nav aria-label="Primary">
     <a href="#portfolio">Portfolio</a>
     <a href="#about">About</a>
   </nav>
@@ -71,12 +71,12 @@
     <h1>Catalogue</h1>
 
     <p class="hero-statement">
-      Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge.
+      Products, applications and utilities from the governed Orange Peel portfolio.
     </p>
 
     <p class="hero-support">
-      One governed portfolio, presented simply.
-      Product knowledge remains in APEX; Catalogue is the view.
+      What exists, what is planned and where it is in delivery.
+      APEX remains the authority; Catalogue is the view.
     </p>
 
   </div>
@@ -113,8 +113,9 @@
     <article
       class="product-card"
       data-product-card
-      data-name="APEX"
+      data-name="Agent"
       data-type="Product"
+      data-lifecycle="BACKLOG"
     >
 
       <div class="card-top">
@@ -128,9 +129,52 @@
         >
 
         <span
-          class="status status-live"
+          class="status status-backlog"
         >
-          Live
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Product
+      </p>
+
+      <h3>
+        Agent
+      </h3>
+
+      <p class="product-summary">
+        Configurable chatbot or voicebot capability for governed Orange Peel domains.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="APEX"
+      data-type="Product"
+      data-lifecycle="DEPLOYED"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-deployed"
+        >
+          Deployed
         </span>
 
       </div>
@@ -163,8 +207,9 @@
     <article
       class="product-card"
       data-product-card
-      data-name="Company"
-      data-type="Application"
+      data-name="ApexPostgreSQL"
+      data-type="Product"
+      data-lifecycle="BACKLOG"
     >
 
       <div class="card-top">
@@ -178,9 +223,490 @@
         >
 
         <span
-          class="status status-development"
+          class="status status-backlog"
         >
-          Not yet demonstrable
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Product
+      </p>
+
+      <h3>
+        ApexPostgreSQL
+      </h3>
+
+      <p class="product-summary">
+        An APEX implementation using PostgreSQL rather than JSON-based persistence for deliberate comparison or validation.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Auditor"
+      data-type="Product"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Product
+      </p>
+
+      <h3>
+        Auditor
+      </h3>
+
+      <p class="product-summary">
+        Assurance capability that can assess governed products and evidence against standards and controls held in APEX.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Decide"
+      data-type="Product"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Product
+      </p>
+
+      <h3>
+        Decide
+      </h3>
+
+      <p class="product-summary">
+        Presents decisions to the appropriate person with reasoning and options, records the authorised decision, and may expose the same capability for reuse through an API.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Policy"
+      data-type="Product"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Product
+      </p>
+
+      <h3>
+        Policy
+      </h3>
+
+      <p class="product-summary">
+        Extends Company to list policies ingested into APEX through ScoutAI.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Transcribe"
+      data-type="Product"
+      data-lifecycle="UNKNOWN"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-unknown"
+        >
+          Status unknown
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Product
+      </p>
+
+      <h3>
+        Transcribe
+      </h3>
+
+      <p class="product-summary">
+        Transcription capability planned to extend to hosted operation, accept additional input formats and use Export to produce transcripts.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Accountant"
+      data-type="Application"
+      data-lifecycle="UNKNOWN"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-unknown"
+        >
+          Status unknown
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Accountant
+      </h3>
+
+      <p class="product-summary">
+        Existing Accountant product concept previously defined within Orange Peel.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Adversary"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Adversary
+      </h3>
+
+      <p class="product-summary">
+        Multi-persona adversarial review and red-teaming capability defined by UC-013 and refined through the Workbench test.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="BidNoBid"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        BidNoBid
+      </h3>
+
+      <p class="product-summary">
+        Tender ingestion and bid/no-bid capability defined by UC-007.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Candidate"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Candidate
+      </h3>
+
+      <p class="product-summary">
+        Resource recommendation capability defined by UC-004.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Catalogue"
+      data-type="Application"
+      data-lifecycle="DEPLOYED"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-deployed"
+        >
+          Deployed
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Catalogue
+      </h3>
+
+      <p class="product-summary">
+        Governed portfolio catalogue projected from APEX.
+      </p>
+
+      
+        <a
+          class="card-action"
+          href="https://catalogue.orangepeelit.co.uk"
+        >
+          Open Catalogue
+          <span aria-hidden="true">→</span>
+        </a>
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Coach"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Coach
+      </h3>
+
+      <p class="product-summary">
+        Coaches sales people from live transcript and may consume Adversary and Transcribe.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Company"
+      data-type="Application"
+      data-lifecycle="UNKNOWN"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-unknown"
+        >
+          Status unknown
         </span>
 
       </div>
@@ -194,7 +720,7 @@
       </h3>
 
       <p class="product-summary">
-        Provides the operational view of Orange Peel company knowledge, services, standards and ways of working.
+        Existing Company application projecting governed company knowledge from APEX.
       </p>
 
       
@@ -205,8 +731,9 @@
     <article
       class="product-card"
       data-product-card
-      data-name="Demo"
+      data-name="Content"
       data-type="Application"
+      data-lifecycle="BACKLOG"
     >
 
       <div class="card-top">
@@ -220,9 +747,52 @@
         >
 
         <span
-          class="status status-development"
+          class="status status-backlog"
         >
-          Not yet demonstrable
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Content
+      </h3>
+
+      <p class="product-summary">
+        Multi-audience content and one-pager synthesis capability defined by UC-002.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Demo"
+      data-type="Application"
+      data-lifecycle="UNKNOWN"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-unknown"
+        >
+          Status unknown
         </span>
 
       </div>
@@ -247,8 +817,9 @@
     <article
       class="product-card"
       data-product-card
-      data-name="Workbench"
+      data-name="Family"
       data-type="Application"
+      data-lifecycle="UNKNOWN"
     >
 
       <div class="card-top">
@@ -262,9 +833,267 @@
         >
 
         <span
-          class="status status-live"
+          class="status status-unknown"
         >
-          Live
+          Status unknown
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Family
+      </h3>
+
+      <p class="product-summary">
+        Existing Family application consuming the Family Core projection.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Kanban"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Kanban
+      </h3>
+
+      <p class="product-summary">
+        Simple APEX-projected delivery board using Backlog, Prioritised, In Build and Deployed columns, with proof derived separately from governed tests.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Market"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Market
+      </h3>
+
+      <p class="product-summary">
+        Market and account intelligence capability defined by UC-006.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Partner"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Partner
+      </h3>
+
+      <p class="product-summary">
+        Competitor intelligence and partnership matching capability defined by UC-008.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Portrait"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Portrait
+      </h3>
+
+      <p class="product-summary">
+        Pen portrait and expertise mapping capability defined by UC-003.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Proposal"
+      data-type="Application"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Application
+      </p>
+
+      <h3>
+        Proposal
+      </h3>
+
+      <p class="product-summary">
+        Builds proposals using governed APEX knowledge and is expected to consume Export and Relay.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Workbench"
+      data-type="Application"
+      data-lifecycle="DEPLOYED"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-deployed"
+        >
+          Deployed
         </span>
 
       </div>
@@ -297,8 +1126,9 @@
     <article
       class="product-card"
       data-product-card
-      data-name="Catalogue"
+      data-name="Export"
       data-type="Utility"
+      data-lifecycle="BACKLOG"
     >
 
       <div class="card-top">
@@ -312,9 +1142,9 @@
         >
 
         <span
-          class="status status-live"
+          class="status status-backlog"
         >
-          Live
+          Backlog
         </span>
 
       </div>
@@ -324,21 +1154,13 @@
       </p>
 
       <h3>
-        Catalogue
+        Export
       </h3>
 
       <p class="product-summary">
-        Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge.
+        Reusable hosted Orange Peel Utility that accepts data plus an APEX-defined output specification and produces the requested file output. Initial intended formats are DOCX, PDF and CSV. Export is a rendering service, not a source of authority. Consuming applications inherit supported export formats from governed APEX capability records.
       </p>
 
-      
-        <a
-          class="card-action"
-          href="https://catalogue.orangepeelit.co.uk"
-        >
-          Open Catalogue
-          <span aria-hidden="true">→</span>
-        </a>
       
 
     </article>
@@ -349,6 +1171,7 @@
       data-product-card
       data-name="Graph"
       data-type="Utility"
+      data-lifecycle="BACKLOG"
     >
 
       <div class="card-top">
@@ -362,9 +1185,9 @@
         >
 
         <span
-          class="status status-development"
+          class="status status-backlog"
         >
-          Not yet demonstrable
+          Backlog
         </span>
 
       </div>
@@ -378,7 +1201,7 @@
       </h3>
 
       <p class="product-summary">
-        Provides a visual way to inspect governed entities, relationships, evidence and provenance held in APEX.
+        Reusable graph capability for presenting governed APEX relationships and projections.
       </p>
 
       
@@ -389,8 +1212,9 @@
     <article
       class="product-card"
       data-product-card
-      data-name="Relay"
+      data-name="Prompt"
       data-type="Utility"
+      data-lifecycle="BACKLOG"
     >
 
       <div class="card-top">
@@ -404,9 +1228,95 @@
         >
 
         <span
-          class="status status-development"
+          class="status status-backlog"
         >
-          Not yet demonstrable
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Utility
+      </p>
+
+      <h3>
+        Prompt
+      </h3>
+
+      <p class="product-summary">
+        Accepts user input and produces an efficient, well-worded prompt suitable for the intended execution target.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Query"
+      data-type="Utility"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Utility
+      </p>
+
+      <h3>
+        Query
+      </h3>
+
+      <p class="product-summary">
+        Accepts user intent and produces a query appropriate to the selected technology, for example Cypher.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Relay"
+      data-type="Utility"
+      data-lifecycle="UNKNOWN"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-unknown"
+        >
+          Status unknown
         </span>
 
       </div>
@@ -421,6 +1331,178 @@
 
       <p class="product-summary">
         Transports governed proposals from Orange Peel applications and utilities into APEX Core without owning authority or persistence.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="ScoutAI"
+      data-type="Utility"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Utility
+      </p>
+
+      <h3>
+        ScoutAI
+      </h3>
+
+      <p class="product-summary">
+        Discovers and acquires source material for governed ingestion and may be configured by domain and by internal or frontier agent.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="SecureIT"
+      data-type="Utility"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Utility
+      </p>
+
+      <h3>
+        SecureIT
+      </h3>
+
+      <p class="product-summary">
+        Provides a secure wrapper or common security capability for Orange Peel applications and utilities.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="Synth"
+      data-type="Utility"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Utility
+      </p>
+
+      <h3>
+        Synth
+      </h3>
+
+      <p class="product-summary">
+        Produces designed synthetic test data to support testing of a governed use case.
+      </p>
+
+      
+
+    </article>
+  
+
+    <article
+      class="product-card"
+      data-product-card
+      data-name="TokenCount"
+      data-type="Utility"
+      data-lifecycle="BACKLOG"
+    >
+
+      <div class="card-top">
+
+        <img
+          class="product-icon"
+          src="assets/favicon-32.png"
+          alt=""
+          width="44"
+          height="44"
+        >
+
+        <span
+          class="status status-backlog"
+        >
+          Backlog
+        </span>
+
+      </div>
+
+      <p class="product-type">
+        Utility
+      </p>
+
+      <h3>
+        TokenCount
+      </h3>
+
+      <p class="product-summary">
+        Estimates the likely execution cost of a prompt or task for targets such as frontier agents and IDE execution.
       </p>
 
       
@@ -445,7 +1527,7 @@
 
     <h2>
       One governed source.
-      A simple public view.
+      Different useful views.
     </h2>
 
   </div>
@@ -453,12 +1535,13 @@
   <div class="about-copy">
 
     <p>
-      Catalogue does not maintain a second product inventory.
-      It projects the current portfolio from governed Orange Peel knowledge.
+      Catalogue does not maintain a separate product inventory.
+      It projects the current portfolio directly from APEX.
     </p>
 
     <p>
-      Public presentation remains deliberately smaller than the knowledge underneath it.
+      Backlog, prioritised, in-build and deployed state comes from governed product knowledge.
+      Test evidence remains separate from delivery state.
     </p>
 
   </div>
@@ -493,17 +1576,13 @@
 
   <div class="built-on-apex">
 
-    <div>
+    <p class="built-label">
+      BUILT WITH APEX
+    </p>
 
-      <p class="built-label">
-        BUILT WITH APEX
-      </p>
-
-      <p>
-        This site is built from the governed knowledge, decisions and evidence held in APEX.
-      </p>
-
-    </div>
+    <p>
+      This site is built from the governed knowledge, decisions and evidence held in APEX.
+    </p>
 
   </div>
 

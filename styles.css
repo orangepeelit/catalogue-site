@@ -165,7 +165,7 @@ main section {
     none;
 
   min-height:
-    72vh;
+    64vh;
 
   display:
     flex;
@@ -349,8 +349,7 @@ h3 {
     20px;
 
   box-shadow:
-    0 12px 32px
-    rgba(7,26,43,.055);
+    0 12px 32px rgba(7,26,43,.055);
 }
 
 .card-top {
@@ -392,7 +391,7 @@ h3 {
     700;
 }
 
-.status-live {
+.status-deployed {
   color:
     #17633a;
 
@@ -400,7 +399,31 @@ h3 {
     #e5f5eb;
 }
 
-.status-development {
+.status-backlog {
+  color:
+    #675317;
+
+  background:
+    #f7f0d9;
+}
+
+.status-prioritised {
+  color:
+    #6b3a16;
+
+  background:
+    #fff0e4;
+}
+
+.status-in-build {
+  color:
+    #24527a;
+
+  background:
+    #e8f1f8;
+}
+
+.status-unknown {
   color:
     #67727d;
 
@@ -552,7 +575,6 @@ h3 {
 }
 
 @media (max-width:880px) {
-
   .product-grid {
     grid-template-columns:
       1fr 1fr;
@@ -565,6 +587,15 @@ h3 {
 }
 
 @media (max-width:600px) {
+  .site-header {
+    gap:
+      16px;
+  }
+
+  nav {
+    gap:
+      14px;
+  }
 
   .product-grid {
     grid-template-columns:

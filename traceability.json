@@ -1,132 +1,410 @@
 {
-  "format": "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V1",
-  "checkpoint": 5,
-  "transactionHash": "5f002d147a59d8cce6139b63cec2f3a8a055d09cf46b372ab60702335e9c7b03",
+  "format": "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V2",
+  "checkpoint": 14,
+  "transactionHash": "f524d15522e940b41ed2deef91c7b0f82126ad3f63c471bc1afa35044725a6d9",
   "portfolio": {
-    "org.orangepeelit.product.apex": {
-      "identity": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "displayName": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "publicSummary": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "demonstration": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+    "org.orangepeelit.product.agent.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
       }
     },
-    "org.orangepeelit.application.company": {
-      "identity": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "displayName": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "publicSummary": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "demonstration": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+    "org.orangepeelit.product.apex": {
+      "lifecycleState": "DEPLOYED",
+      "sourceModel": "legacy-entity-assertions",
+      "provenance": {
+        "identity": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "displayName": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "publicSummary": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "demonstration": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        }
+      }
+    },
+    "org.orangepeelit.product.apexpostgresql.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.auditor.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.decide.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.policy.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.transcribe.v1": {
+      "lifecycleState": "UNKNOWN",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.accountant.v1": {
+      "lifecycleState": "UNKNOWN",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.adversary.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.bidnobid.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.candidate.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.catalogue.v1": {
+      "lifecycleState": "DEPLOYED",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        },
+        "displayName": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "publicSummary": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "demonstration": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        }
+      }
+    },
+    "org.orangepeelit.product.coach.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.company.v1": {
+      "lifecycleState": "UNKNOWN",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        },
+        "displayName": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "publicSummary": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "demonstration": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        }
+      }
+    },
+    "org.orangepeelit.product.content.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
       }
     },
     "org.orangepeelit.application.demo": {
-      "identity": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "displayName": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "publicSummary": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "demonstration": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+      "lifecycleState": "UNKNOWN",
+      "sourceModel": "legacy-entity-assertions",
+      "provenance": {
+        "identity": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "displayName": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "publicSummary": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "demonstration": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        }
+      }
+    },
+    "org.orangepeelit.product.family.v1": {
+      "lifecycleState": "UNKNOWN",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.kanban.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.market.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.partner.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.portrait.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.proposal.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
       }
     },
     "org.orangepeelit.application.workbench": {
-      "identity": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "displayName": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "publicSummary": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "demonstration": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+      "lifecycleState": "DEPLOYED",
+      "sourceModel": "legacy-entity-assertions",
+      "provenance": {
+        "identity": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "displayName": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "publicSummary": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "demonstration": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        }
       }
     },
-    "org.orangepeelit.utility.catalogue": {
-      "identity": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "displayName": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "publicSummary": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "demonstration": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+    "org.orangepeelit.product.export.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 9,
+          "transactionHash": "63efb7db6c67193878204a94dd3f431578080ac907be7ad273db93c6bbd3eb31"
+        }
       }
     },
-    "org.orangepeelit.utility.graph": {
-      "identity": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "displayName": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "publicSummary": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "demonstration": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+    "org.orangepeelit.product.graph.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        },
+        "displayName": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "publicSummary": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "demonstration": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        }
+      }
+    },
+    "org.orangepeelit.product.prompt.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.query.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
       }
     },
     "org.orangepeelit.utility.relay": {
-      "identity": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "displayName": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "publicSummary": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
-      },
-      "demonstration": {
-        "checkpoint": 4,
-        "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+      "lifecycleState": "UNKNOWN",
+      "sourceModel": "legacy-entity-assertions",
+      "provenance": {
+        "identity": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "displayName": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "publicSummary": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        },
+        "demonstration": {
+          "checkpoint": 4,
+          "transactionHash": "f9badccbf94a14ff3a5bc35eea5d93d0e95761ff239d2ce48ca1ad326480b4a8"
+        }
+      }
+    },
+    "org.orangepeelit.product.scoutai.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.secureit.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.synth.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
+      }
+    },
+    "org.orangepeelit.product.tokencount.v1": {
+      "lifecycleState": "BACKLOG",
+      "sourceModel": "direct-portfolio-record",
+      "provenance": {
+        "identity": {
+          "checkpoint": 13,
+          "transactionHash": "9f25eb2fd5ec29ab05d5e1c1c96dc915983d9fa8b68d5ead3887e1e234ee99e0"
+        }
       }
     }
   },
