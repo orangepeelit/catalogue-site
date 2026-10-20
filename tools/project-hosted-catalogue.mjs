@@ -44,6 +44,7 @@ function unwrapRecord(operation) {
     depth < 8;
     depth++
   ) {
+
     if (!value) {
       return null;
     }
@@ -58,14 +59,18 @@ function unwrapRecord(operation) {
     if (
       typeof value?.record === "object"
     ) {
-      value = value.record;
+      value =
+        value.record;
+
       continue;
     }
 
     if (
       typeof value?.value === "object"
     ) {
-      value = value.value;
+      value =
+        value.value;
+
       continue;
     }
 
@@ -77,44 +82,97 @@ function unwrapRecord(operation) {
 
 
 function esc(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
+  return String(
+    value ?? ""
+  )
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    );
 }
 
 
 function normaliseLifecycle(value) {
   const text =
-    String(value ?? "UNKNOWN")
+    String(
+      value ?? ""
+    )
       .trim()
       .toUpperCase()
-      .replaceAll("_", " ");
+      .replaceAll(
+        "_",
+        " "
+      );
 
-  const map = {
-    BACKLOG: "BACKLOG",
-    PRIORITISED: "PRIORITISED",
-    PRIORITIZED: "PRIORITISED",
-    "IN BUILD": "IN BUILD",
-    DEPLOYED: "DEPLOYED",
-    UNKNOWN: "UNKNOWN"
+  const known = {
+    BACKLOG:
+      "BACKLOG",
+
+    PRIORITISED:
+      "PRIORITISED",
+
+    PRIORITIZED:
+      "PRIORITISED",
+
+    "IN BUILD":
+      "IN BUILD",
+
+    DEPLOYED:
+      "DEPLOYED"
   };
 
-  return map[text] ?? "UNKNOWN";
+  return (
+    known[text] ??
+    "BACKLOG"
+  );
 }
 
 
 function lifecycleLabel(value) {
   return {
-    BACKLOG: "Backlog",
-    PRIORITISED: "Prioritised",
-    "IN BUILD": "In Build",
-    DEPLOYED: "Deployed",
-    UNKNOWN: "Status unknown"
+    BACKLOG:
+      "Backlog",
+
+    PRIORITISED:
+      "Prioritised",
+
+    "IN BUILD":
+      "In Build",
+
+    DEPLOYED:
+      "Deployed"
   }[
-    normaliseLifecycle(value)
+    normaliseLifecycle(
+      value
+    )
   ];
+}
+
+
+function maxCheckpoint(values) {
+  return Math.max(
+    0,
+    ...values
+      .filter(Boolean)
+      .map(
+        value =>
+          Number(
+            value?.checkpoint ?? 0
+          )
+      )
+  );
 }
 
 
@@ -124,10 +182,44 @@ const head =
   );
 
 
+const generatedAt =
+  new Date();
+
+
+const versionId =
+  `CAT-${head.checkpoint}-${String(
+    head.transactionHash
+  ).slice(0,8)}`;
+
+
+const lastUpdated =
+  new Intl.DateTimeFormat(
+    "en-GB",
+    {
+      day:
+        "2-digit",
+
+      month:
+        "short",
+
+      year:
+        "numeric",
+
+      timeZone:
+        "Europe/London"
+    }
+  ).format(
+    generatedAt
+  );
+
+
 const transactions = [];
+
 let after = 0;
 
+
 while (true) {
+
   const page =
     await readJson(
       `${coreUrl}/v1/core/transactions?after=${after}&limit=500`
@@ -140,13 +232,17 @@ while (true) {
     break;
   }
 
-  transactions.push(...rows);
+  transactions.push(
+    ...rows
+  );
 
   after =
     Math.max(
       ...rows.map(
         row =>
-          Number(row.checkpoint)
+          Number(
+            row.checkpoint
+          )
       )
     );
 
@@ -167,6 +263,7 @@ for (
   const transaction
   of transactions
 ) {
+
   for (
     const operation
     of transaction
@@ -174,6 +271,7 @@ for (
       ?.proposal
       ?.operations ?? []
   ) {
+
     if (
       operation?.kind !==
       "collection.record.upsert"
@@ -182,7 +280,9 @@ for (
     }
 
     const record =
-      unwrapRecord(operation);
+      unwrapRecord(
+        operation
+      );
 
     if (!record?.id) {
       continue;
@@ -190,7 +290,9 @@ for (
 
     current.set(
       record.id,
-      structuredClone(record)
+      structuredClone(
+        record
+      )
     );
 
     provenance.set(
@@ -211,7 +313,10 @@ const records =
   [...current.values()];
 
 
-function isKind(record, kind) {
+function isKind(
+  record,
+  kind
+) {
   return (
     String(
       record?.kind ?? ""
@@ -236,10 +341,12 @@ const shell =
     "org.orangepeelit.presentation.microsite-shell.v1"
   );
 
+
 const typography =
   recordValue(
     "org.orangepeelit.presentation.claim.typography-v1"
   );
+
 
 const colours =
   recordValue(
@@ -253,23 +360,32 @@ if (
   !colours
 ) {
   throw new Error(
-    "Governed microsite presentation is incomplete."
+    "Catalogue presentation data is incomplete."
   );
 }
 
 
 const legacyRules = [
   {
-    prefix: "org.orangepeelit.product.",
-    category: "Product"
+    prefix:
+      "org.orangepeelit.product.",
+
+    category:
+      "Product"
   },
   {
-    prefix: "org.orangepeelit.application.",
-    category: "Application"
+    prefix:
+      "org.orangepeelit.application.",
+
+    category:
+      "Application"
   },
   {
-    prefix: "org.orangepeelit.utility.",
-    category: "Utility"
+    prefix:
+      "org.orangepeelit.utility.",
+
+    category:
+      "Utility"
   }
 ];
 
@@ -278,7 +394,9 @@ function legacyCategory(id) {
   return (
     legacyRules.find(
       rule =>
-        id.startsWith(rule.prefix)
+        id.startsWith(
+          rule.prefix
+        )
     )?.category ??
     null
   );
@@ -288,19 +406,29 @@ function legacyCategory(id) {
 function assertionsFor(subjectRef) {
   return records.filter(
     record =>
-      isKind(record, "Assertion") &&
-      record.subjectRef === subjectRef
+      isKind(
+        record,
+        "Assertion"
+      ) &&
+      record.subjectRef ===
+        subjectRef
   );
 }
 
 
-function claim(subjectRef, key) {
+function claim(
+  subjectRef,
+  key
+) {
+
   const matches =
-    assertionsFor(subjectRef)
-      .filter(
-        record =>
-          record?.literal?.key === key
-      );
+    assertionsFor(
+      subjectRef
+    ).filter(
+      record =>
+        record?.literal?.key ===
+        key
+    );
 
   if (matches.length !== 1) {
     return null;
@@ -324,11 +452,17 @@ const legacyItems =
   records
     .filter(
       record =>
-        isKind(record, "Entity") &&
-        legacyCategory(record.id)
+        isKind(
+          record,
+          "Entity"
+        ) &&
+        legacyCategory(
+          record.id
+        )
     )
     .map(
       identity => {
+
         const display =
           claim(
             identity.id,
@@ -355,10 +489,37 @@ const legacyItems =
         }
 
         const demo =
-          literal(demonstration);
+          literal(
+            demonstration
+          );
 
-        const live =
-          demo?.status === "LIVE";
+        const deployed =
+          demo?.status ===
+          "LIVE";
+
+        const itemProvenance = {
+          identity:
+            provenance.get(
+              identity.id
+            ),
+
+          displayName:
+            provenance.get(
+              display.id
+            ),
+
+          publicSummary:
+            provenance.get(
+              summary.id
+            ),
+
+          demonstration:
+            demonstration
+              ? provenance.get(
+                  demonstration.id
+                )
+              : null
+        };
 
         return {
           id:
@@ -370,44 +531,36 @@ const legacyItems =
             ),
 
           displayName:
-            literal(display),
+            literal(
+              display
+            ),
 
           publicSummary:
-            literal(summary),
+            literal(
+              summary
+            ),
 
           lifecycleState:
-            live
+            deployed
               ? "DEPLOYED"
-              : "UNKNOWN",
-
-          demonstrationStatus:
-            demo?.status ??
-            "NOT_DEMONSTRABLE",
+              : "BACKLOG",
 
           demonstrationUrl:
             demo?.demonstrationUrl ??
             null,
 
+          newestCheckpoint:
+            maxCheckpoint(
+              Object.values(
+                itemProvenance
+              )
+            ),
+
           sourceModel:
-            "legacy-entity-assertions",
+            "legacy",
 
-          provenance: {
-            identity:
-              provenance.get(identity.id),
-
-            displayName:
-              provenance.get(display.id),
-
-            publicSummary:
-              provenance.get(summary.id),
-
-            demonstration:
-              demonstration
-                ? provenance.get(
-                    demonstration.id
-                  )
-                : null
-          }
+          provenance:
+            itemProvenance
         };
       }
     )
@@ -434,43 +587,58 @@ const directItems =
         )
     )
     .map(
-      record => ({
-        id:
-          record.id,
+      record => {
 
-        category:
-          String(record.kind),
+        const itemProvenance =
+          provenance.get(
+            record.id
+          );
 
-        displayName:
-          record.name ??
-          record.title ??
-          record.id,
+        return {
+          id:
+            record.id,
 
-        publicSummary:
-          record.statement ??
-          "",
+          category:
+            String(
+              record.kind
+            ),
 
-        lifecycleState:
-          normaliseLifecycle(
-            record.lifecycleState
-          ),
+          displayName:
+            record.name ??
+            record.title ??
+            record.id,
 
-        demonstrationStatus:
-          null,
+          publicSummary:
+            record.publicSummary ??
+            record.statement ??
+            "",
 
-        demonstrationUrl:
-          record.demonstrationUrl ??
-          record.url ??
-          null,
+          lifecycleState:
+            normaliseLifecycle(
+              record.lifecycleState
+            ),
 
-        sourceModel:
-          "direct-portfolio-record",
+          demonstrationUrl:
+            record.demonstrationUrl ??
+            record.url ??
+            null,
 
-        provenance: {
-          identity:
-            provenance.get(record.id)
-        }
-      })
+          newestCheckpoint:
+            Number(
+              itemProvenance
+                ?.checkpoint ??
+              0
+            ),
+
+          sourceModel:
+            "portfolio",
+
+          provenance: {
+            identity:
+              itemProvenance
+          }
+        };
+      }
     );
 
 
@@ -495,13 +663,16 @@ for (
   const item
   of directItems
 ) {
+
   const key =
     String(
       item.displayName
     ).toLowerCase();
 
   const previous =
-    merged.get(key);
+    merged.get(
+      key
+    );
 
   merged.set(
     key,
@@ -514,10 +685,17 @@ for (
         previous?.demonstrationUrl ??
         null,
 
-      demonstrationStatus:
-        item.demonstrationStatus ??
-        previous?.demonstrationStatus ??
-        null,
+      newestCheckpoint:
+        Math.max(
+          Number(
+            item.newestCheckpoint ??
+            0
+          ),
+          Number(
+            previous?.newestCheckpoint ??
+            0
+          )
+        ),
 
       provenance: {
         ...(previous?.provenance ?? {}),
@@ -530,22 +708,41 @@ for (
 
 const items =
   [...merged.values()]
+    .map(
+      item => ({
+        ...item,
+
+        lifecycleState:
+          normaliseLifecycle(
+            item.lifecycleState
+          )
+      })
+    )
     .sort(
-      (a, b) => {
+      (a,b) => {
+
         const order = {
-          Product: 0,
-          Application: 1,
-          Utility: 2
+          Product:
+            0,
+
+          Application:
+            1,
+
+          Utility:
+            2
         };
 
         return (
           (order[a.category] ?? 99) -
             (order[b.category] ?? 99) ||
-          String(a.displayName)
-            .localeCompare(
-              String(b.displayName),
-              "en-GB"
-            )
+          String(
+            a.displayName
+          ).localeCompare(
+            String(
+              b.displayName
+            ),
+            "en-GB"
+          )
         );
       }
     );
@@ -553,27 +750,26 @@ const items =
 
 if (!items.length) {
   throw new Error(
-    "Hosted APEX contains no portfolio records."
+    "Catalogue contains no portfolio items."
   );
 }
 
 
 function card(item) {
+
   const lifecycle =
     normaliseLifecycle(
       item.lifecycleState
-    );
-
-  const status =
-    lifecycleLabel(
-      lifecycle
     );
 
   const statusClass =
     "status-" +
     lifecycle
       .toLowerCase()
-      .replaceAll(" ", "-");
+      .replaceAll(
+        " ",
+        "-"
+      );
 
   const action =
     lifecycle === "DEPLOYED" &&
@@ -606,6 +802,9 @@ function card(item) {
       data-lifecycle="${esc(
         lifecycle
       )}"
+      data-newest="${esc(
+        item.newestCheckpoint
+      )}"
     >
 
       <div class="card-top">
@@ -621,21 +820,31 @@ function card(item) {
         <span
           class="status ${statusClass}"
         >
-          ${esc(status)}
+          ${esc(
+            lifecycleLabel(
+              lifecycle
+            )
+          )}
         </span>
 
       </div>
 
       <p class="product-type">
-        ${esc(item.category)}
+        ${esc(
+          item.category
+        )}
       </p>
 
       <h3>
-        ${esc(item.displayName)}
+        ${esc(
+          item.displayName
+        )}
       </h3>
 
       <p class="product-summary">
-        ${esc(item.publicSummary)}
+        ${esc(
+          item.publicSummary
+        )}
       </p>
 
       ${action}
@@ -696,7 +905,6 @@ const html = `<!doctype html>
 
   <nav aria-label="Primary">
     <a href="#portfolio">Portfolio</a>
-    <a href="#about">About</a>
   </nav>
 
 </header>
@@ -715,15 +923,12 @@ const html = `<!doctype html>
       ORANGE PEEL IT
     </p>
 
-    <h1>Catalogue</h1>
+    <h1>
+      Catalogue
+    </h1>
 
     <p class="hero-statement">
-      Products, applications and utilities from the governed Orange Peel portfolio.
-    </p>
-
-    <p class="hero-support">
-      What exists, what is planned and where it is in delivery.
-      APEX remains the authority; Catalogue is the view.
+      Products, applications and utilities from Orange Peel IT.
     </p>
 
   </div>
@@ -745,54 +950,49 @@ const html = `<!doctype html>
       </p>
 
       <h2>
-        What Orange Peel is building.
+        What we're building.
       </h2>
+
+    </div>
+
+    <div
+      class="sort-control"
+      aria-label="Sort portfolio"
+    >
+
+      <label for="catalogue-sort">
+        Sort
+      </label>
+
+      <select id="catalogue-sort">
+
+        <option value="type">
+          Type
+        </option>
+
+        <option value="az">
+          A-Z
+        </option>
+
+        <option value="newest">
+          Newest
+        </option>
+
+      </select>
 
     </div>
 
   </div>
 
+
   <div
     class="product-grid"
     id="product-grid"
   >
+
     ${items
       .map(card)
       .join("\n")}
-  </div>
-
-</section>
-
-
-<section
-  class="about"
-  id="about"
->
-
-  <div>
-
-    <p class="section-label">
-      HOW IT WORKS
-    </p>
-
-    <h2>
-      One governed source.
-      Different useful views.
-    </h2>
-
-  </div>
-
-  <div class="about-copy">
-
-    <p>
-      Catalogue does not maintain a separate product inventory.
-      It projects the current portfolio directly from APEX.
-    </p>
-
-    <p>
-      Backlog, prioritised, in-build and deployed state comes from governed product knowledge.
-      Test evidence remains separate from delivery state.
-    </p>
 
   </div>
 
@@ -830,23 +1030,139 @@ const html = `<!doctype html>
 
   </div>
 
+
   <div class="built-on-apex">
 
     <p class="built-label">
-      ${esc(
-        shell.builtWithLabel
-      )}
+      BUILT ON
+      <a
+        href="https://apex.orangepeelit.co.uk"
+      >
+        APEX
+      </a>
     </p>
 
-    <p>
-      ${esc(
-        shell.builtWithText
+    <p class="build-meta">
+      Version ${esc(
+        versionId
+      )}
+      ·
+      Last updated ${esc(
+        lastUpdated
       )}
     </p>
 
   </div>
 
 </footer>
+
+
+<script>
+(() => {
+
+  const grid =
+    document.getElementById(
+      "product-grid"
+    );
+
+  const select =
+    document.getElementById(
+      "catalogue-sort"
+    );
+
+  const categoryOrder = {
+    Product:
+      0,
+
+    Application:
+      1,
+
+    Utility:
+      2
+  };
+
+
+  const cards = () =>
+    Array.from(
+      grid.querySelectorAll(
+        "[data-product-card]"
+      )
+    );
+
+
+  function compare(mode) {
+
+    return (a,b) => {
+
+      if (mode === "az") {
+
+        return (
+          a.dataset.name.localeCompare(
+            b.dataset.name,
+            "en-GB"
+          )
+        );
+      }
+
+
+      if (mode === "newest") {
+
+        return (
+          Number(
+            b.dataset.newest
+          ) -
+          Number(
+            a.dataset.newest
+          ) ||
+          a.dataset.name.localeCompare(
+            b.dataset.name,
+            "en-GB"
+          )
+        );
+      }
+
+
+      return (
+        (
+          categoryOrder[
+            a.dataset.type
+          ] ?? 99
+        ) -
+        (
+          categoryOrder[
+            b.dataset.type
+          ] ?? 99
+        ) ||
+        a.dataset.name.localeCompare(
+          b.dataset.name,
+          "en-GB"
+        )
+      );
+    };
+  }
+
+
+  select.addEventListener(
+    "change",
+    () => {
+
+      cards()
+        .sort(
+          compare(
+            select.value
+          )
+        )
+        .forEach(
+          card =>
+            grid.appendChild(
+              card
+            )
+        );
+    }
+  );
+
+})();
+</script>
 
 </body>
 
@@ -1021,7 +1337,7 @@ main section {
     none;
 
   min-height:
-    64vh;
+    52vh;
 
   display:
     flex;
@@ -1044,7 +1360,7 @@ main section {
     0 auto;
 
   padding:
-    90px 0;
+    88px 0;
 }
 
 .eyebrow,
@@ -1123,10 +1439,10 @@ h3 {
 
 .hero-statement {
   max-width:
-    930px;
+    800px;
 
   margin:
-    46px 0 0;
+    42px 0 0;
 
   color:
     var(--navy);
@@ -1135,34 +1451,70 @@ h3 {
     clamp(
       27px,
       4vw,
-      47px
+      46px
     );
 
   line-height:
     1.14;
 }
 
-.hero-support {
-  max-width:
-    760px;
+.portfolio {
+  padding:
+    100px 0;
+}
 
-  margin:
-    28px 0 0;
+.section-heading {
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    space-between;
+
+  gap:
+    32px;
+}
+
+.sort-control {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
 
   color:
     var(--muted);
 
   font-size:
-    18px;
+    14px;
 }
 
-.portfolio,
-.about {
-  padding:
-    100px 0;
+.sort-control select {
+  min-width:
+    130px;
 
-  border-bottom:
+  padding:
+    9px 34px 9px 12px;
+
+  border:
     1px solid var(--line);
+
+  border-radius:
+    10px;
+
+  background:
+    var(--white);
+
+  color:
+    var(--navy);
+
+  font:
+    inherit;
 }
 
 .product-grid {
@@ -1205,7 +1557,8 @@ h3 {
     20px;
 
   box-shadow:
-    0 12px 32px rgba(7,26,43,.055);
+    0 12px 32px
+    rgba(7,26,43,.055);
 }
 
 .card-top {
@@ -1279,14 +1632,6 @@ h3 {
     #e8f1f8;
 }
 
-.status-unknown {
-  color:
-    #67727d;
-
-  background:
-    #edf0f2;
-}
-
 .product-type {
   margin-top:
     26px;
@@ -1326,34 +1671,6 @@ h3 {
     none;
 }
 
-.about {
-  display:
-    grid;
-
-  grid-template-columns:
-    .9fr 1.1fr;
-
-  gap:
-    80px;
-}
-
-.about-copy p {
-  max-width:
-    720px;
-
-  margin:
-    0 0 24px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    18px;
-
-  line-height:
-    1.75;
-}
-
 .site-footer {
   width:
     min(
@@ -1375,6 +1692,9 @@ h3 {
 
   gap:
     30px;
+
+  border-top:
+    1px solid var(--line);
 
   color:
     var(--muted);
@@ -1409,13 +1729,13 @@ h3 {
 }
 
 .built-on-apex {
-  max-width:
-    560px;
+  text-align:
+    right;
 }
 
 .built-label {
-  margin-bottom:
-    5px;
+  margin:
+    0;
 
   color:
     var(--orange-dark);
@@ -1430,28 +1750,39 @@ h3 {
     .14em;
 }
 
+.built-label a {
+  text-decoration:
+    none;
+}
+
+.build-meta {
+  margin:
+    7px 0 0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+}
+
 @media (max-width:880px) {
+
   .product-grid {
     grid-template-columns:
       1fr 1fr;
   }
 
-  .about {
-    grid-template-columns:
-      1fr;
+  .section-heading {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
   }
 }
 
 @media (max-width:600px) {
-  .site-header {
-    gap:
-      16px;
-  }
-
-  nav {
-    gap:
-      14px;
-  }
 
   .product-grid {
     grid-template-columns:
@@ -1462,13 +1793,18 @@ h3 {
     flex-direction:
       column;
   }
+
+  .built-on-apex {
+    text-align:
+      left;
+  }
 }
 `.trim() + "\n";
 
 
 const manifest = {
   format:
-    "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V2",
+    "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V3",
 
   generatedFrom:
     "hosted-apex-core",
@@ -1478,6 +1814,12 @@ const manifest = {
 
   transactionHash:
     head.transactionHash,
+
+  versionId:
+    versionId,
+
+  lastUpdated:
+    generatedAt.toISOString(),
 
   portfolioEntries:
     items.length,
@@ -1500,11 +1842,11 @@ const manifest = {
         lifecycleState:
           item.lifecycleState,
 
-        demonstrationStatus:
-          item.demonstrationStatus,
-
         demonstrationUrl:
           item.demonstrationUrl,
+
+        newestCheckpoint:
+          item.newestCheckpoint,
 
         sourceModel:
           item.sourceModel
@@ -1515,13 +1857,19 @@ const manifest = {
 
 const traceability = {
   format:
-    "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V2",
+    "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V3",
 
   checkpoint:
     head.checkpoint,
 
   transactionHash:
     head.transactionHash,
+
+  versionId:
+    versionId,
+
+  lastUpdated:
+    generatedAt.toISOString(),
 
   portfolio:
     Object.fromEntries(
@@ -1532,6 +1880,9 @@ const traceability = {
             lifecycleState:
               item.lifecycleState,
 
+            newestCheckpoint:
+              item.newestCheckpoint,
+
             sourceModel:
               item.sourceModel,
 
@@ -1540,25 +1891,15 @@ const traceability = {
           }
         ]
       )
-    ),
-
-  presentation: {
-    micrositeShell:
-      "org.orangepeelit.presentation.microsite-shell.v1",
-
-    typography:
-      "org.orangepeelit.presentation.claim.typography-v1",
-
-    colours:
-      "org.orangepeelit.presentation.claim.colours-v1"
-  }
+    )
 };
 
 
 fs.mkdirSync(
   output,
   {
-    recursive: true
+    recursive:
+      true
   }
 );
 
@@ -1623,22 +1964,21 @@ console.log(
       transactionHash:
         head.transactionHash,
 
-      records:
-        current.size,
+      versionId:
+        versionId,
 
-      transactions:
-        transactions.length,
+      lastUpdated:
+        generatedAt.toISOString(),
 
       portfolioEntries:
         items.length,
 
       lifecycleCounts:
         items.reduce(
-          (result, item) => {
+          (result,item) => {
+
             const key =
-              normaliseLifecycle(
-                item.lifecycleState
-              );
+              item.lifecycleState;
 
             result[key] =
               (result[key] ?? 0) + 1;
@@ -1646,23 +1986,6 @@ console.log(
             return result;
           },
           {}
-        ),
-
-      portfolio:
-        items.map(
-          item => ({
-            name:
-              item.displayName,
-
-            type:
-              item.category,
-
-            lifecycle:
-              item.lifecycleState,
-
-            source:
-              item.sourceModel
-          })
         )
     },
     null,

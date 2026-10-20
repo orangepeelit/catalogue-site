@@ -1,8 +1,10 @@
 {
-  "format": "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V2",
+  "format": "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V3",
   "generatedFrom": "hosted-apex-core",
-  "checkpoint": 14,
-  "transactionHash": "f524d15522e940b41ed2deef91c7b0f82126ad3f63c471bc1afa35044725a6d9",
+  "checkpoint": 15,
+  "transactionHash": "09b6dc778450769ccbdb8d1c71fdb57c5b7a43a7be7b21b3d667a2de24a46f07",
+  "versionId": "CAT-15-09b6dc77",
+  "lastUpdated": "2026-10-20T15:01:57.799Z",
   "portfolioEntries": 32,
   "publicItems": [
     {
@@ -11,9 +13,9 @@
       "category": "Product",
       "publicSummary": "Configurable chatbot or voicebot capability for governed Orange Peel domains.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.apex",
@@ -21,9 +23,9 @@
       "category": "Product",
       "publicSummary": "Governs knowledge, evidence, decisions and provenance so applications can project traceable results from a common semantic core.",
       "lifecycleState": "DEPLOYED",
-      "demonstrationStatus": "LIVE",
       "demonstrationUrl": "https://apex.orangepeelit.co.uk",
-      "sourceModel": "legacy-entity-assertions"
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy"
     },
     {
       "id": "org.orangepeelit.product.apexpostgresql.v1",
@@ -31,9 +33,9 @@
       "category": "Product",
       "publicSummary": "An APEX implementation using PostgreSQL rather than JSON-based persistence for deliberate comparison or validation.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.auditor.v1",
@@ -41,9 +43,9 @@
       "category": "Product",
       "publicSummary": "Assurance capability that can assess governed products and evidence against standards and controls held in APEX.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.decide.v1",
@@ -51,9 +53,9 @@
       "category": "Product",
       "publicSummary": "Presents decisions to the appropriate person with reasoning and options, records the authorised decision, and may expose the same capability for reuse through an API.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.policy.v1",
@@ -61,29 +63,29 @@
       "category": "Product",
       "publicSummary": "Extends Company to list policies ingested into APEX through ScoutAI.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.transcribe.v1",
       "displayName": "Transcribe",
       "category": "Product",
       "publicSummary": "Transcription capability planned to extend to hosted operation, accept additional input formats and use Export to produce transcripts.",
-      "lifecycleState": "UNKNOWN",
-      "demonstrationStatus": null,
+      "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.accountant.v1",
       "displayName": "Accountant",
       "category": "Application",
       "publicSummary": "Existing Accountant product concept previously defined within Orange Peel.",
-      "lifecycleState": "UNKNOWN",
-      "demonstrationStatus": null,
+      "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.adversary.v1",
@@ -91,9 +93,9 @@
       "category": "Application",
       "publicSummary": "Multi-persona adversarial review and red-teaming capability defined by UC-013 and refined through the Workbench test.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.bidnobid.v1",
@@ -101,9 +103,9 @@
       "category": "Application",
       "publicSummary": "Tender ingestion and bid/no-bid capability defined by UC-007.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.candidate.v1",
@@ -111,9 +113,9 @@
       "category": "Application",
       "publicSummary": "Resource recommendation capability defined by UC-004.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.catalogue.v1",
@@ -121,9 +123,9 @@
       "category": "Application",
       "publicSummary": "Governed portfolio catalogue projected from APEX.",
       "lifecycleState": "DEPLOYED",
-      "demonstrationStatus": "LIVE",
       "demonstrationUrl": "https://catalogue.orangepeelit.co.uk",
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.coach.v1",
@@ -131,19 +133,19 @@
       "category": "Application",
       "publicSummary": "Coaches sales people from live transcript and may consume Adversary and Transcribe.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.company.v1",
       "displayName": "Company",
       "category": "Application",
       "publicSummary": "Existing Company application projecting governed company knowledge from APEX.",
-      "lifecycleState": "UNKNOWN",
-      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.content.v1",
@@ -151,29 +153,29 @@
       "category": "Application",
       "publicSummary": "Multi-audience content and one-pager synthesis capability defined by UC-002.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.application.demo",
       "displayName": "Demo",
       "category": "Application",
       "publicSummary": "Demonstrates Orange Peel capabilities and use cases using governed knowledge and reusable APEX components.",
-      "lifecycleState": "UNKNOWN",
-      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
-      "sourceModel": "legacy-entity-assertions"
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy"
     },
     {
       "id": "org.orangepeelit.product.family.v1",
       "displayName": "Family",
       "category": "Application",
       "publicSummary": "Existing Family application consuming the Family Core projection.",
-      "lifecycleState": "UNKNOWN",
-      "demonstrationStatus": null,
+      "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.kanban.v1",
@@ -181,9 +183,9 @@
       "category": "Application",
       "publicSummary": "Simple APEX-projected delivery board using Backlog, Prioritised, In Build and Deployed columns, with proof derived separately from governed tests.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.market.v1",
@@ -191,9 +193,9 @@
       "category": "Application",
       "publicSummary": "Market and account intelligence capability defined by UC-006.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.partner.v1",
@@ -201,9 +203,9 @@
       "category": "Application",
       "publicSummary": "Competitor intelligence and partnership matching capability defined by UC-008.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.portrait.v1",
@@ -211,9 +213,9 @@
       "category": "Application",
       "publicSummary": "Pen portrait and expertise mapping capability defined by UC-003.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.proposal.v1",
@@ -221,9 +223,9 @@
       "category": "Application",
       "publicSummary": "Builds proposals using governed APEX knowledge and is expected to consume Export and Relay.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.application.workbench",
@@ -231,9 +233,9 @@
       "category": "Application",
       "publicSummary": "Turns ideas, evidence and decisions into governed product requirements, designs, tests and engineering artefacts.",
       "lifecycleState": "DEPLOYED",
-      "demonstrationStatus": "LIVE",
       "demonstrationUrl": "https://workbench.orangepeelit.co.uk",
-      "sourceModel": "legacy-entity-assertions"
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy"
     },
     {
       "id": "org.orangepeelit.product.export.v1",
@@ -241,9 +243,9 @@
       "category": "Utility",
       "publicSummary": "Reusable hosted Orange Peel Utility that accepts data plus an APEX-defined output specification and produces the requested file output. Initial intended formats are DOCX, PDF and CSV. Export is a rendering service, not a source of authority. Consuming applications inherit supported export formats from governed APEX capability records.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 9,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.graph.v1",
@@ -251,9 +253,9 @@
       "category": "Utility",
       "publicSummary": "Reusable graph capability for presenting governed APEX relationships and projections.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": "NOT_DEMONSTRABLE",
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.prompt.v1",
@@ -261,9 +263,9 @@
       "category": "Utility",
       "publicSummary": "Accepts user input and produces an efficient, well-worded prompt suitable for the intended execution target.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.query.v1",
@@ -271,19 +273,19 @@
       "category": "Utility",
       "publicSummary": "Accepts user intent and produces a query appropriate to the selected technology, for example Cypher.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.utility.relay",
       "displayName": "Relay",
       "category": "Utility",
       "publicSummary": "Transports governed proposals from Orange Peel applications and utilities into APEX Core without owning authority or persistence.",
-      "lifecycleState": "UNKNOWN",
-      "demonstrationStatus": "NOT_DEMONSTRABLE",
+      "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
-      "sourceModel": "legacy-entity-assertions"
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy"
     },
     {
       "id": "org.orangepeelit.product.scoutai.v1",
@@ -291,9 +293,9 @@
       "category": "Utility",
       "publicSummary": "Discovers and acquires source material for governed ingestion and may be configured by domain and by internal or frontier agent.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.secureit.v1",
@@ -301,9 +303,9 @@
       "category": "Utility",
       "publicSummary": "Provides a secure wrapper or common security capability for Orange Peel applications and utilities.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.synth.v1",
@@ -311,9 +313,9 @@
       "category": "Utility",
       "publicSummary": "Produces designed synthetic test data to support testing of a governed use case.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.tokencount.v1",
@@ -321,9 +323,9 @@
       "category": "Utility",
       "publicSummary": "Estimates the likely execution cost of a prompt or task for targets such as frontier agents and IDE execution.",
       "lifecycleState": "BACKLOG",
-      "demonstrationStatus": null,
       "demonstrationUrl": null,
-      "sourceModel": "direct-portfolio-record"
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
     }
   ]
 }

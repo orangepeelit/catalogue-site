@@ -1,11 +1,14 @@
 {
-  "format": "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V2",
-  "checkpoint": 14,
-  "transactionHash": "f524d15522e940b41ed2deef91c7b0f82126ad3f63c471bc1afa35044725a6d9",
+  "format": "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V3",
+  "checkpoint": 15,
+  "transactionHash": "09b6dc778450769ccbdb8d1c71fdb57c5b7a43a7be7b21b3d667a2de24a46f07",
+  "versionId": "CAT-15-09b6dc77",
+  "lastUpdated": "2026-10-20T15:01:57.799Z",
   "portfolio": {
     "org.orangepeelit.product.agent.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -15,7 +18,8 @@
     },
     "org.orangepeelit.product.apex": {
       "lifecycleState": "DEPLOYED",
-      "sourceModel": "legacy-entity-assertions",
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy",
       "provenance": {
         "identity": {
           "checkpoint": 4,
@@ -37,7 +41,8 @@
     },
     "org.orangepeelit.product.apexpostgresql.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -47,7 +52,8 @@
     },
     "org.orangepeelit.product.auditor.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -57,7 +63,8 @@
     },
     "org.orangepeelit.product.decide.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -67,7 +74,8 @@
     },
     "org.orangepeelit.product.policy.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -76,8 +84,9 @@
       }
     },
     "org.orangepeelit.product.transcribe.v1": {
-      "lifecycleState": "UNKNOWN",
-      "sourceModel": "direct-portfolio-record",
+      "lifecycleState": "BACKLOG",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -86,8 +95,9 @@
       }
     },
     "org.orangepeelit.product.accountant.v1": {
-      "lifecycleState": "UNKNOWN",
-      "sourceModel": "direct-portfolio-record",
+      "lifecycleState": "BACKLOG",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -97,7 +107,8 @@
     },
     "org.orangepeelit.product.adversary.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -107,7 +118,8 @@
     },
     "org.orangepeelit.product.bidnobid.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -117,7 +129,8 @@
     },
     "org.orangepeelit.product.candidate.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -127,7 +140,8 @@
     },
     "org.orangepeelit.product.catalogue.v1": {
       "lifecycleState": "DEPLOYED",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -149,7 +163,8 @@
     },
     "org.orangepeelit.product.coach.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -158,8 +173,9 @@
       }
     },
     "org.orangepeelit.product.company.v1": {
-      "lifecycleState": "UNKNOWN",
-      "sourceModel": "direct-portfolio-record",
+      "lifecycleState": "BACKLOG",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -181,7 +197,8 @@
     },
     "org.orangepeelit.product.content.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -190,8 +207,9 @@
       }
     },
     "org.orangepeelit.application.demo": {
-      "lifecycleState": "UNKNOWN",
-      "sourceModel": "legacy-entity-assertions",
+      "lifecycleState": "BACKLOG",
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy",
       "provenance": {
         "identity": {
           "checkpoint": 4,
@@ -212,8 +230,9 @@
       }
     },
     "org.orangepeelit.product.family.v1": {
-      "lifecycleState": "UNKNOWN",
-      "sourceModel": "direct-portfolio-record",
+      "lifecycleState": "BACKLOG",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -223,7 +242,8 @@
     },
     "org.orangepeelit.product.kanban.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -233,7 +253,8 @@
     },
     "org.orangepeelit.product.market.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -243,7 +264,8 @@
     },
     "org.orangepeelit.product.partner.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -253,7 +275,8 @@
     },
     "org.orangepeelit.product.portrait.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -263,7 +286,8 @@
     },
     "org.orangepeelit.product.proposal.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -273,7 +297,8 @@
     },
     "org.orangepeelit.application.workbench": {
       "lifecycleState": "DEPLOYED",
-      "sourceModel": "legacy-entity-assertions",
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy",
       "provenance": {
         "identity": {
           "checkpoint": 4,
@@ -295,7 +320,8 @@
     },
     "org.orangepeelit.product.export.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 9,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 9,
@@ -305,7 +331,8 @@
     },
     "org.orangepeelit.product.graph.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -327,7 +354,8 @@
     },
     "org.orangepeelit.product.prompt.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -337,7 +365,8 @@
     },
     "org.orangepeelit.product.query.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -346,8 +375,9 @@
       }
     },
     "org.orangepeelit.utility.relay": {
-      "lifecycleState": "UNKNOWN",
-      "sourceModel": "legacy-entity-assertions",
+      "lifecycleState": "BACKLOG",
+      "newestCheckpoint": 4,
+      "sourceModel": "legacy",
       "provenance": {
         "identity": {
           "checkpoint": 4,
@@ -369,7 +399,8 @@
     },
     "org.orangepeelit.product.scoutai.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -379,7 +410,8 @@
     },
     "org.orangepeelit.product.secureit.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -389,7 +421,8 @@
     },
     "org.orangepeelit.product.synth.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -399,7 +432,8 @@
     },
     "org.orangepeelit.product.tokencount.v1": {
       "lifecycleState": "BACKLOG",
-      "sourceModel": "direct-portfolio-record",
+      "newestCheckpoint": 13,
+      "sourceModel": "portfolio",
       "provenance": {
         "identity": {
           "checkpoint": 13,
@@ -407,10 +441,5 @@
         }
       }
     }
-  },
-  "presentation": {
-    "micrositeShell": "org.orangepeelit.presentation.microsite-shell.v1",
-    "typography": "org.orangepeelit.presentation.claim.typography-v1",
-    "colours": "org.orangepeelit.presentation.claim.colours-v1"
   }
 }

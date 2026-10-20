@@ -30,7 +30,7 @@
 
 <link
   rel="stylesheet"
-  href="styles.css?v=14"
+  href="styles.css?v=15"
 >
 
 </head>
@@ -49,7 +49,6 @@
 
   <nav aria-label="Primary">
     <a href="#portfolio">Portfolio</a>
-    <a href="#about">About</a>
   </nav>
 
 </header>
@@ -68,15 +67,12 @@
       ORANGE PEEL IT
     </p>
 
-    <h1>Catalogue</h1>
+    <h1>
+      Catalogue
+    </h1>
 
     <p class="hero-statement">
-      Products, applications and utilities from the governed Orange Peel portfolio.
-    </p>
-
-    <p class="hero-support">
-      What exists, what is planned and where it is in delivery.
-      APEX remains the authority; Catalogue is the view.
+      Products, applications and utilities from Orange Peel IT.
     </p>
 
   </div>
@@ -98,17 +94,46 @@
       </p>
 
       <h2>
-        What Orange Peel is building.
+        What we're building.
       </h2>
+
+    </div>
+
+    <div
+      class="sort-control"
+      aria-label="Sort portfolio"
+    >
+
+      <label for="catalogue-sort">
+        Sort
+      </label>
+
+      <select id="catalogue-sort">
+
+        <option value="type">
+          Type
+        </option>
+
+        <option value="az">
+          A-Z
+        </option>
+
+        <option value="newest">
+          Newest
+        </option>
+
+      </select>
 
     </div>
 
   </div>
 
+
   <div
     class="product-grid"
     id="product-grid"
   >
+
     
     <article
       class="product-card"
@@ -116,6 +141,7 @@
       data-name="Agent"
       data-type="Product"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -159,6 +185,7 @@
       data-name="APEX"
       data-type="Product"
       data-lifecycle="DEPLOYED"
+      data-newest="4"
     >
 
       <div class="card-top">
@@ -210,6 +237,7 @@
       data-name="ApexPostgreSQL"
       data-type="Product"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -253,6 +281,7 @@
       data-name="Auditor"
       data-type="Product"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -296,6 +325,7 @@
       data-name="Decide"
       data-type="Product"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -339,6 +369,7 @@
       data-name="Policy"
       data-type="Product"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -381,7 +412,8 @@
       data-product-card
       data-name="Transcribe"
       data-type="Product"
-      data-lifecycle="UNKNOWN"
+      data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -395,9 +427,9 @@
         >
 
         <span
-          class="status status-unknown"
+          class="status status-backlog"
         >
-          Status unknown
+          Backlog
         </span>
 
       </div>
@@ -424,7 +456,8 @@
       data-product-card
       data-name="Accountant"
       data-type="Application"
-      data-lifecycle="UNKNOWN"
+      data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -438,9 +471,9 @@
         >
 
         <span
-          class="status status-unknown"
+          class="status status-backlog"
         >
-          Status unknown
+          Backlog
         </span>
 
       </div>
@@ -468,6 +501,7 @@
       data-name="Adversary"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -511,6 +545,7 @@
       data-name="BidNoBid"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -554,6 +589,7 @@
       data-name="Candidate"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -597,6 +633,7 @@
       data-name="Catalogue"
       data-type="Application"
       data-lifecycle="DEPLOYED"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -648,6 +685,7 @@
       data-name="Coach"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -690,7 +728,8 @@
       data-product-card
       data-name="Company"
       data-type="Application"
-      data-lifecycle="UNKNOWN"
+      data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -704,9 +743,9 @@
         >
 
         <span
-          class="status status-unknown"
+          class="status status-backlog"
         >
-          Status unknown
+          Backlog
         </span>
 
       </div>
@@ -734,6 +773,7 @@
       data-name="Content"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -776,7 +816,8 @@
       data-product-card
       data-name="Demo"
       data-type="Application"
-      data-lifecycle="UNKNOWN"
+      data-lifecycle="BACKLOG"
+      data-newest="4"
     >
 
       <div class="card-top">
@@ -790,9 +831,9 @@
         >
 
         <span
-          class="status status-unknown"
+          class="status status-backlog"
         >
-          Status unknown
+          Backlog
         </span>
 
       </div>
@@ -819,7 +860,8 @@
       data-product-card
       data-name="Family"
       data-type="Application"
-      data-lifecycle="UNKNOWN"
+      data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -833,9 +875,9 @@
         >
 
         <span
-          class="status status-unknown"
+          class="status status-backlog"
         >
-          Status unknown
+          Backlog
         </span>
 
       </div>
@@ -863,6 +905,7 @@
       data-name="Kanban"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -906,6 +949,7 @@
       data-name="Market"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -949,6 +993,7 @@
       data-name="Partner"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -992,6 +1037,7 @@
       data-name="Portrait"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1035,6 +1081,7 @@
       data-name="Proposal"
       data-type="Application"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1078,6 +1125,7 @@
       data-name="Workbench"
       data-type="Application"
       data-lifecycle="DEPLOYED"
+      data-newest="4"
     >
 
       <div class="card-top">
@@ -1129,6 +1177,7 @@
       data-name="Export"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="9"
     >
 
       <div class="card-top">
@@ -1172,6 +1221,7 @@
       data-name="Graph"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1215,6 +1265,7 @@
       data-name="Prompt"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1258,6 +1309,7 @@
       data-name="Query"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1300,7 +1352,8 @@
       data-product-card
       data-name="Relay"
       data-type="Utility"
-      data-lifecycle="UNKNOWN"
+      data-lifecycle="BACKLOG"
+      data-newest="4"
     >
 
       <div class="card-top">
@@ -1314,9 +1367,9 @@
         >
 
         <span
-          class="status status-unknown"
+          class="status status-backlog"
         >
-          Status unknown
+          Backlog
         </span>
 
       </div>
@@ -1344,6 +1397,7 @@
       data-name="ScoutAI"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1387,6 +1441,7 @@
       data-name="SecureIT"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1430,6 +1485,7 @@
       data-name="Synth"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1473,6 +1529,7 @@
       data-name="TokenCount"
       data-type="Utility"
       data-lifecycle="BACKLOG"
+      data-newest="13"
     >
 
       <div class="card-top">
@@ -1509,40 +1566,6 @@
 
     </article>
   
-  </div>
-
-</section>
-
-
-<section
-  class="about"
-  id="about"
->
-
-  <div>
-
-    <p class="section-label">
-      HOW IT WORKS
-    </p>
-
-    <h2>
-      One governed source.
-      Different useful views.
-    </h2>
-
-  </div>
-
-  <div class="about-copy">
-
-    <p>
-      Catalogue does not maintain a separate product inventory.
-      It projects the current portfolio directly from APEX.
-    </p>
-
-    <p>
-      Backlog, prioritised, in-build and deployed state comes from governed product knowledge.
-      Test evidence remains separate from delivery state.
-    </p>
 
   </div>
 
@@ -1574,19 +1597,135 @@
 
   </div>
 
+
   <div class="built-on-apex">
 
     <p class="built-label">
-      BUILT WITH APEX
+      BUILT ON
+      <a
+        href="https://apex.orangepeelit.co.uk"
+      >
+        APEX
+      </a>
     </p>
 
-    <p>
-      This site is built from the governed knowledge, decisions and evidence held in APEX.
+    <p class="build-meta">
+      Version CAT-15-09b6dc77
+      ·
+      Last updated 20 Oct 2026
     </p>
 
   </div>
 
 </footer>
+
+
+<script>
+(() => {
+
+  const grid =
+    document.getElementById(
+      "product-grid"
+    );
+
+  const select =
+    document.getElementById(
+      "catalogue-sort"
+    );
+
+  const categoryOrder = {
+    Product:
+      0,
+
+    Application:
+      1,
+
+    Utility:
+      2
+  };
+
+
+  const cards = () =>
+    Array.from(
+      grid.querySelectorAll(
+        "[data-product-card]"
+      )
+    );
+
+
+  function compare(mode) {
+
+    return (a,b) => {
+
+      if (mode === "az") {
+
+        return (
+          a.dataset.name.localeCompare(
+            b.dataset.name,
+            "en-GB"
+          )
+        );
+      }
+
+
+      if (mode === "newest") {
+
+        return (
+          Number(
+            b.dataset.newest
+          ) -
+          Number(
+            a.dataset.newest
+          ) ||
+          a.dataset.name.localeCompare(
+            b.dataset.name,
+            "en-GB"
+          )
+        );
+      }
+
+
+      return (
+        (
+          categoryOrder[
+            a.dataset.type
+          ] ?? 99
+        ) -
+        (
+          categoryOrder[
+            b.dataset.type
+          ] ?? 99
+        ) ||
+        a.dataset.name.localeCompare(
+          b.dataset.name,
+          "en-GB"
+        )
+      );
+    };
+  }
+
+
+  select.addEventListener(
+    "change",
+    () => {
+
+      cards()
+        .sort(
+          compare(
+            select.value
+          )
+        )
+        .forEach(
+          card =>
+            grid.appendChild(
+              card
+            )
+        );
+    }
+  );
+
+})();
+</script>
 
 </body>
 
