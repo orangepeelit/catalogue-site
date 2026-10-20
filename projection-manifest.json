@@ -1,79 +1,58 @@
 {
-  "format": "ORANGEPEELIT_CATALOGUE_PROJECTION_V2",
-  "generated": true,
-  "authority": "OrangePeelIT Core",
+  "format": "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V1",
+  "generatedFrom": "hosted-apex-core",
+  "checkpoint": 5,
+  "transactionHash": "5f002d147a59d8cce6139b63cec2f3a8a055d09cf46b372ab60702335e9c7b03",
   "portfolioEntries": 7,
-  "coreBaseline": {
-    "records": 334,
-    "transactions": 10149,
-    "graphNodes": "Not recalculated",
-    "graphEdges": "Not recalculated"
-  },
-  "rules": {
-    "duplicateManualInventory": false,
-    "governedPresentationMetadata": true,
-    "sharedIconFallback": true,
-    "demonstrabilitySeparateFromMaturity": true,
-    "publicTechnicalLeakage": false,
-    "productDependencyRequiresExplicitGovernedPresentationFact": true,
-    "sortMutatesGovernedData": false
-  },
   "publicItems": [
     {
       "displayName": "APEX",
       "category": "Product",
       "publicSummary": "Governs knowledge, evidence, decisions and provenance so applications can project traceable results from a common semantic core.",
       "demonstrationStatus": "LIVE",
-      "demonstrationUrl": "https://apex.orangepeelit.co.uk",
-      "icon": "assets/favicon-32.png"
+      "demonstrationUrl": "https://apex.orangepeelit.co.uk"
     },
     {
       "displayName": "Company",
       "category": "Application",
       "publicSummary": "Provides the operational view of Orange Peel company knowledge, services, standards and ways of working.",
       "demonstrationStatus": "NOT_DEMONSTRABLE",
-      "demonstrationUrl": null,
-      "icon": "assets/favicon-32.png"
+      "demonstrationUrl": null
     },
     {
       "displayName": "Demo",
       "category": "Application",
       "publicSummary": "Demonstrates Orange Peel capabilities and use cases using governed knowledge and reusable APEX components.",
       "demonstrationStatus": "NOT_DEMONSTRABLE",
-      "demonstrationUrl": null,
-      "icon": "assets/favicon-32.png"
+      "demonstrationUrl": null
     },
     {
       "displayName": "Workbench",
       "category": "Application",
       "publicSummary": "Turns ideas, evidence and decisions into governed product requirements, designs, tests and engineering artefacts.",
-      "demonstrationStatus": "NOT_DEMONSTRABLE",
-      "demonstrationUrl": null,
-      "icon": "assets/favicon-32.png"
+      "demonstrationStatus": "LIVE",
+      "demonstrationUrl": "https://workbench.orangepeelit.co.uk"
     },
     {
       "displayName": "Catalogue",
       "category": "Utility",
       "publicSummary": "Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge.",
       "demonstrationStatus": "LIVE",
-      "demonstrationUrl": "https://catalogue.orangepeelit.co.uk",
-      "icon": "assets/favicon-32.png"
+      "demonstrationUrl": "https://catalogue.orangepeelit.co.uk"
     },
     {
       "displayName": "Graph",
       "category": "Utility",
       "publicSummary": "Provides a visual way to inspect governed entities, relationships, evidence and provenance held in APEX.",
       "demonstrationStatus": "NOT_DEMONSTRABLE",
-      "demonstrationUrl": null,
-      "icon": "assets/favicon-32.png"
+      "demonstrationUrl": null
     },
     {
       "displayName": "Relay",
       "category": "Utility",
       "publicSummary": "Transports governed proposals from Orange Peel applications and utilities into APEX Core without owning authority or persistence.",
       "demonstrationStatus": "NOT_DEMONSTRABLE",
-      "demonstrationUrl": null,
-      "icon": "assets/favicon-32.png"
+      "demonstrationUrl": null
     }
   ]
 }

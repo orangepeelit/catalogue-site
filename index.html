@@ -1,72 +1,41 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
-  >
 
-  <title>Catalogue | Orange Peel IT</title>
+<meta charset="utf-8">
 
-  <meta
-    name="description"
-    content="Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge."
-  >
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
 
-  <meta
-    name="theme-color"
-    content="#071a2b"
-  >
+<title>Catalogue | Orange Peel IT</title>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap"
-    rel="stylesheet"
-  >
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap"
+  rel="stylesheet"
+>
 
-  <link
-    rel="icon"
-    href="assets/favicon.ico"
-    sizes="any"
-  >
+<link
+  rel="stylesheet"
+  href="styles.css?v=5"
+>
 
-  <link
-    rel="icon"
-    type="image/png"
-    href="assets/favicon-32.png"
-    sizes="32x32"
-  >
-
-  <link
-    rel="apple-touch-icon"
-    href="assets/apple-touch-icon.png"
-  >
-
-  <link
-    rel="stylesheet"
-    href="styles.css"
-  >
 </head>
 
 <body>
-
-<a
-  class="skip-link"
-  href="#main"
->
-  Skip to content
-</a>
 
 <header class="site-header">
 
@@ -78,109 +47,78 @@
     <strong>Catalogue</strong>
   </a>
 
-  <nav aria-label="Primary">
+  <nav>
     <a href="#portfolio">Portfolio</a>
     <a href="#about">About</a>
-    <a href="#proof">Proof</a>
   </nav>
 
 </header>
 
-<main id="main">
 
-  <section
-    class="hero"
-    id="top"
-  >
-    <div class="hero-inner">
+<main>
 
-      <p class="eyebrow">
-        ORANGE PEEL IT
+<section
+  class="hero"
+  id="top"
+>
+
+  <div class="hero-inner">
+
+    <p class="eyebrow">
+      ORANGE PEEL IT
+    </p>
+
+    <h1>Catalogue</h1>
+
+    <p class="hero-statement">
+      Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge.
+    </p>
+
+    <p class="hero-support">
+      One governed portfolio, presented simply.
+      Product knowledge remains in APEX; Catalogue is the view.
+    </p>
+
+  </div>
+
+</section>
+
+
+<section
+  class="portfolio"
+  id="portfolio"
+>
+
+  <div class="section-heading">
+
+    <div>
+
+      <p class="section-label">
+        PORTFOLIO
       </p>
 
-      <h1>Catalogue</h1>
-
-      <p class="hero-statement">
-        Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge.
-      </p>
-
-      <p class="hero-support">
-        One governed portfolio, presented simply.
-        Product knowledge remains in APEX; Catalogue is the view.
-      </p>
-
-      <div class="hero-actions">
-        <a
-          class="button primary"
-          href="#portfolio"
-        >
-          Explore the portfolio
-        </a>
-
-        <a
-          class="button secondary"
-          href="#about"
-        >
-          How Catalogue works
-        </a>
-      </div>
+      <h2>
+        What Orange Peel is building.
+      </h2>
 
     </div>
-  </section>
 
-  <section
-    class="portfolio"
-    id="portfolio"
+  </div>
+
+  <div
+    class="product-grid"
+    id="product-grid"
   >
-
-    <div class="section-heading">
-      <div>
-        <p class="section-label">
-          PORTFOLIO
-        </p>
-
-        <h2>
-          What Orange Peel is building.
-        </h2>
-      </div>
-
-      <div
-        class="sort-control"
-        aria-label="Sort portfolio"
-      >
-        <label for="catalogue-sort">
-          Sort
-        </label>
-
-        <select id="catalogue-sort">
-          <option value="type">
-            Type
-          </option>
-
-          <option value="az">
-            A-Z
-          </option>
-
-          <option value="newest">
-            Newest
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div
-      class="product-grid"
-      id="product-grid"
-    >
-      
+    
     <article
       class="product-card"
       data-product-card
       data-name="APEX"
       data-type="Product"
-      data-newest="10136"
     >
+
       <div class="card-top">
+
         <img
           class="product-icon"
           src="assets/favicon-32.png"
@@ -189,12 +127,21 @@
           height="44"
         >
 
-        <span class="status status-live">Live</span>
+        <span
+          class="status status-live"
+        >
+          Live
+        </span>
+
       </div>
 
-      <p class="product-type">Product</p>
+      <p class="product-type">
+        Product
+      </p>
 
-      <h3>APEX</h3>
+      <h3>
+        APEX
+      </h3>
 
       <p class="product-summary">
         Governs knowledge, evidence, decisions and provenance so applications can project traceable results from a common semantic core.
@@ -206,18 +153,22 @@
           href="https://apex.orangepeelit.co.uk"
         >
           Open APEX
-          <span aria-hidden="true">&#8594;</span>
+          <span aria-hidden="true">→</span>
         </a>
+      
+
     </article>
+  
 
     <article
       class="product-card"
       data-product-card
       data-name="Company"
       data-type="Application"
-      data-newest="13"
     >
+
       <div class="card-top">
+
         <img
           class="product-icon"
           src="assets/favicon-32.png"
@@ -226,28 +177,40 @@
           height="44"
         >
 
-        <span class="status status-development">Not yet demonstrable</span>
+        <span
+          class="status status-development"
+        >
+          Not yet demonstrable
+        </span>
+
       </div>
 
-      <p class="product-type">Application</p>
+      <p class="product-type">
+        Application
+      </p>
 
-      <h3>Company</h3>
+      <h3>
+        Company
+      </h3>
 
       <p class="product-summary">
         Provides the operational view of Orange Peel company knowledge, services, standards and ways of working.
       </p>
 
       
+
     </article>
+  
 
     <article
       class="product-card"
       data-product-card
       data-name="Demo"
       data-type="Application"
-      data-newest="13"
     >
+
       <div class="card-top">
+
         <img
           class="product-icon"
           src="assets/favicon-32.png"
@@ -256,28 +219,40 @@
           height="44"
         >
 
-        <span class="status status-development">Not yet demonstrable</span>
+        <span
+          class="status status-development"
+        >
+          Not yet demonstrable
+        </span>
+
       </div>
 
-      <p class="product-type">Application</p>
+      <p class="product-type">
+        Application
+      </p>
 
-      <h3>Demo</h3>
+      <h3>
+        Demo
+      </h3>
 
       <p class="product-summary">
         Demonstrates Orange Peel capabilities and use cases using governed knowledge and reusable APEX components.
       </p>
 
       
+
     </article>
+  
 
     <article
       class="product-card"
       data-product-card
       data-name="Workbench"
       data-type="Application"
-      data-newest="10148"
     >
+
       <div class="card-top">
+
         <img
           class="product-icon"
           src="assets/favicon-32.png"
@@ -286,28 +261,48 @@
           height="44"
         >
 
-        <span class="status status-development">Not yet demonstrable</span>
+        <span
+          class="status status-live"
+        >
+          Live
+        </span>
+
       </div>
 
-      <p class="product-type">Application</p>
+      <p class="product-type">
+        Application
+      </p>
 
-      <h3>Workbench</h3>
+      <h3>
+        Workbench
+      </h3>
 
       <p class="product-summary">
         Turns ideas, evidence and decisions into governed product requirements, designs, tests and engineering artefacts.
       </p>
 
       
+        <a
+          class="card-action"
+          href="https://workbench.orangepeelit.co.uk"
+        >
+          Open Workbench
+          <span aria-hidden="true">→</span>
+        </a>
+      
+
     </article>
+  
 
     <article
-      class="product-card product-card-selected"
+      class="product-card"
       data-product-card
       data-name="Catalogue"
       data-type="Utility"
-      data-newest="10141"
     >
+
       <div class="card-top">
+
         <img
           class="product-icon"
           src="assets/favicon-32.png"
@@ -316,12 +311,21 @@
           height="44"
         >
 
-        <span class="status status-live">Live</span>
+        <span
+          class="status status-live"
+        >
+          Live
+        </span>
+
       </div>
 
-      <p class="product-type">Utility</p>
+      <p class="product-type">
+        Utility
+      </p>
 
-      <h3>Catalogue</h3>
+      <h3>
+        Catalogue
+      </h3>
 
       <p class="product-summary">
         Presents Orange Peel products, applications and utilities directly from governed portfolio knowledge.
@@ -333,18 +337,22 @@
           href="https://catalogue.orangepeelit.co.uk"
         >
           Open Catalogue
-          <span aria-hidden="true">&#8594;</span>
+          <span aria-hidden="true">→</span>
         </a>
+      
+
     </article>
+  
 
     <article
       class="product-card"
       data-product-card
       data-name="Graph"
       data-type="Utility"
-      data-newest="13"
     >
+
       <div class="card-top">
+
         <img
           class="product-icon"
           src="assets/favicon-32.png"
@@ -353,28 +361,40 @@
           height="44"
         >
 
-        <span class="status status-development">Not yet demonstrable</span>
+        <span
+          class="status status-development"
+        >
+          Not yet demonstrable
+        </span>
+
       </div>
 
-      <p class="product-type">Utility</p>
+      <p class="product-type">
+        Utility
+      </p>
 
-      <h3>Graph</h3>
+      <h3>
+        Graph
+      </h3>
 
       <p class="product-summary">
         Provides a visual way to inspect governed entities, relationships, evidence and provenance held in APEX.
       </p>
 
       
+
     </article>
+  
 
     <article
       class="product-card"
       data-product-card
       data-name="Relay"
       data-type="Utility"
-      data-newest="10145"
     >
+
       <div class="card-top">
+
         <img
           class="product-icon"
           src="assets/favicon-32.png"
@@ -383,106 +403,72 @@
           height="44"
         >
 
-        <span class="status status-development">Not yet demonstrable</span>
+        <span
+          class="status status-development"
+        >
+          Not yet demonstrable
+        </span>
+
       </div>
 
-      <p class="product-type">Utility</p>
+      <p class="product-type">
+        Utility
+      </p>
 
-      <h3>Relay</h3>
+      <h3>
+        Relay
+      </h3>
 
       <p class="product-summary">
         Transports governed proposals from Orange Peel applications and utilities into APEX Core without owning authority or persistence.
       </p>
 
       
+
     </article>
-    </div>
+  
+  </div>
 
-  </section>
+</section>
 
-  <section
-    class="about"
-    id="about"
-  >
-    <div>
-      <p class="section-label">
-        HOW IT WORKS
-      </p>
 
-      <h2>
-        One governed source. A simple public view.
-      </h2>
-    </div>
+<section
+  class="about"
+  id="about"
+>
 
-    <div class="about-copy">
+  <div>
 
-      <p>
-        Catalogue does not maintain a second product inventory.
-        It projects the current portfolio from governed Orange Peel knowledge.
-      </p>
+    <p class="section-label">
+      HOW IT WORKS
+    </p>
 
-      <p>
-        Public presentation is deliberately smaller than the knowledge underneath it.
-        Internal identifiers, incomplete engineering notes and unresolved implementation detail remain available for assurance without leaking into the normal interface.
-      </p>
+    <h2>
+      One governed source.
+      A simple public view.
+    </h2>
 
-    </div>
-  </section>
+  </div>
 
-  <section
-    class="proof"
-    id="proof"
-  >
+  <div class="about-copy">
 
-    <div class="proof-copy">
-      <p class="section-label">
-        WHAT IS PROVEN
-      </p>
+    <p>
+      Catalogue does not maintain a second product inventory.
+      It projects the current portfolio from governed Orange Peel knowledge.
+    </p>
 
-      <h2>
-        A portfolio we can reproduce.
-      </h2>
+    <p>
+      Public presentation remains deliberately smaller than the knowledge underneath it.
+    </p>
 
-      <p>
-        This Catalogue is generated from the current governed OrangePeelIT Core baseline.
-        Replaying the same governed transaction history inserts nothing new.
-      </p>
-    </div>
+  </div>
 
-    <dl class="metrics">
-
-      <div>
-        <dt>Governed records</dt>
-        <dd>334</dd>
-      </div>
-
-      <div>
-        <dt>Transactions</dt>
-        <dd>10149</dd>
-      </div>
-
-      <div>
-        <dt>Graph nodes</dt>
-        <dd>Not recalculated</dd>
-      </div>
-
-      <div>
-        <dt>Reference arcs</dt>
-        <dd>Not recalculated</dd>
-      </div>
-
-      <div>
-        <dt>Replay insertions</dt>
-        <dd>0</dd>
-      </div>
-
-    </dl>
-
-  </section>
+</section>
 
 </main>
 
-<footer>
+
+<footer class="site-footer">
 
   <div class="footer-brand">
 
@@ -492,10 +478,15 @@
     >
 
     <div>
-      <strong>Catalogue</strong>
+
+      <strong>
+        Catalogue
+      </strong>
+
       <p>
         Orange Peel IT Services Ltd
       </p>
+
     </div>
 
   </div>
@@ -503,6 +494,7 @@
   <div class="built-on-apex">
 
     <div>
+
       <p class="built-label">
         BUILT WITH APEX
       </p>
@@ -510,88 +502,13 @@
       <p>
         This site is built from the governed knowledge, decisions and evidence held in APEX.
       </p>
-    </div>
 
-    <a href="#about">
-      See how
-    </a>
+    </div>
 
   </div>
 
 </footer>
 
-<script>
-(() => {
-  const grid =
-    document.getElementById(
-      "product-grid"
-    );
-
-  const select =
-    document.getElementById(
-      "catalogue-sort"
-    );
-
-  const categoryOrder = {
-    Product: 0,
-    Application: 1,
-    Utility: 2
-  };
-
-  const cards = () =>
-    Array.from(
-      grid.querySelectorAll(
-        "[data-product-card]"
-      )
-    );
-
-  function compare(mode) {
-    return (a,b) => {
-      if (mode === "az") {
-        return a.dataset.name
-          .localeCompare(
-            b.dataset.name,
-            "en-GB"
-          );
-      }
-
-      if (mode === "newest") {
-        return (
-          Number(b.dataset.newest) -
-            Number(a.dataset.newest) ||
-          a.dataset.name.localeCompare(
-            b.dataset.name,
-            "en-GB"
-          )
-        );
-      }
-
-      return (
-        categoryOrder[a.dataset.type] -
-          categoryOrder[b.dataset.type] ||
-        a.dataset.name.localeCompare(
-          b.dataset.name,
-          "en-GB"
-        )
-      );
-    };
-  }
-
-  select.addEventListener(
-    "change",
-    () => {
-      cards()
-        .sort(
-          compare(select.value)
-        )
-        .forEach(
-          card =>
-            grid.appendChild(card)
-        );
-    }
-  );
-})();
-</script>
-
 </body>
+
 </html>
