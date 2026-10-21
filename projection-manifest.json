@@ -1,11 +1,11 @@
 {
   "format": "ORANGEPEELIT_CATALOGUE_HOSTED_PROJECTION_V3",
   "generatedFrom": "hosted-apex-core",
-  "checkpoint": 15,
-  "transactionHash": "09b6dc778450769ccbdb8d1c71fdb57c5b7a43a7be7b21b3d667a2de24a46f07",
-  "versionId": "CAT-15-09b6dc77",
-  "lastUpdated": "2026-10-20T15:01:57.799Z",
-  "portfolioEntries": 32,
+  "checkpoint": 22,
+  "transactionHash": "45a7dbe49a6e5f506d1e504210ce7b1ac2e41f48c142b896d3dd424d307a9d70",
+  "versionId": "CAT-22-45a7dbe4",
+  "lastUpdated": "2026-10-21T08:39:05.217Z",
+  "portfolioEntries": 37,
   "publicItems": [
     {
       "id": "org.orangepeelit.product.agent.v1",
@@ -55,6 +55,16 @@
       "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
       "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
+    },
+    {
+      "id": "org.orangepeelit.product.quality-platform.v1",
+      "displayName": "Kaizen",
+      "category": "Product",
+      "publicSummary": "A composed product that closes the loop from observation and evidence through improvement, assessment, decision, implementation, publication, verification and retained learning.",
+      "lifecycleState": "BACKLOG",
+      "demonstrationUrl": null,
+      "newestCheckpoint": 22,
       "sourceModel": "portfolio"
     },
     {
@@ -178,13 +188,23 @@
       "sourceModel": "portfolio"
     },
     {
+      "id": "org.orangepeelit.product.kaizen.v1",
+      "displayName": "Improve",
+      "category": "Application",
+      "publicSummary": "Continuously identifies and proposes improvements to Orange Peel products, services and public presentation using evidence from APEX, live product behaviour, user feedback, tests and accepted standards.",
+      "lifecycleState": "BACKLOG",
+      "demonstrationUrl": null,
+      "newestCheckpoint": 22,
+      "sourceModel": "portfolio"
+    },
+    {
       "id": "org.orangepeelit.product.kanban.v1",
       "displayName": "Kanban",
       "category": "Application",
       "publicSummary": "Simple APEX-projected delivery board using Backlog, Prioritised, In Build and Deployed columns, with proof derived separately from governed tests.",
-      "lifecycleState": "BACKLOG",
+      "lifecycleState": "DEPLOYED",
       "demonstrationUrl": null,
-      "newestCheckpoint": 13,
+      "newestCheckpoint": 18,
       "sourceModel": "portfolio"
     },
     {
@@ -225,6 +245,36 @@
       "lifecycleState": "BACKLOG",
       "demonstrationUrl": null,
       "newestCheckpoint": 13,
+      "sourceModel": "portfolio"
+    },
+    {
+      "id": "org.orangepeelit.product.publish.v1",
+      "displayName": "Publish",
+      "category": "Application",
+      "publicSummary": "Propagates accepted APEX changes to affected projections, refreshes or rebuilds them as required, proves the result and records publication evidence back into APEX.",
+      "lifecycleState": "BACKLOG",
+      "demonstrationUrl": null,
+      "newestCheckpoint": 22,
+      "sourceModel": "portfolio"
+    },
+    {
+      "id": "org.orangepeelit.product.schedule.v1",
+      "displayName": "Schedule",
+      "category": "Application",
+      "publicSummary": "Provides a shared scheduling API for authorised execution of planned work, generated build scripts, website stories and recurring product tasks.",
+      "lifecycleState": "BACKLOG",
+      "demonstrationUrl": null,
+      "newestCheckpoint": 22,
+      "sourceModel": "portfolio"
+    },
+    {
+      "id": "org.orangepeelit.product.impact.v1",
+      "displayName": "WhatIf",
+      "category": "Application",
+      "publicSummary": "Assesses the consequences of a proposed change against APEX knowledge, identifies affected products and artefacts, highlights confirmed, possible and unknown impacts, and supports human prioritisation and delivery decisions.",
+      "lifecycleState": "BACKLOG",
+      "demonstrationUrl": null,
+      "newestCheckpoint": 22,
       "sourceModel": "portfolio"
     },
     {
@@ -278,14 +328,14 @@
       "sourceModel": "portfolio"
     },
     {
-      "id": "org.orangepeelit.utility.relay",
+      "id": "org.orangepeelit.product.relay.v1",
       "displayName": "Relay",
       "category": "Utility",
-      "publicSummary": "Transports governed proposals from Orange Peel applications and utilities into APEX Core without owning authority or persistence.",
-      "lifecycleState": "BACKLOG",
+      "publicSummary": "Hosted transaction transport used by Orange Peel applications to submit changes to APEX.",
+      "lifecycleState": "DEPLOYED",
       "demonstrationUrl": null,
-      "newestCheckpoint": 4,
-      "sourceModel": "legacy"
+      "newestCheckpoint": 17,
+      "sourceModel": "portfolio"
     },
     {
       "id": "org.orangepeelit.product.scoutai.v1",
