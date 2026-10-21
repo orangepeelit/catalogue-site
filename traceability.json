@@ -1,9 +1,9 @@
 {
   "format": "ORANGEPEELIT_CATALOGUE_HOSTED_TRACEABILITY_V3",
-  "checkpoint": 22,
-  "transactionHash": "45a7dbe49a6e5f506d1e504210ce7b1ac2e41f48c142b896d3dd424d307a9d70",
-  "versionId": "CAT-22-45a7dbe4",
-  "lastUpdated": "2026-10-21T08:39:05.217Z",
+  "checkpoint": 24,
+  "transactionHash": "fad385585103b6aaa0eb0f7870dc788c471eb88399f114e147e657f5eb03d1b0",
+  "versionId": "CAT-24-fad38558",
+  "lastUpdated": "2026-10-21T08:58:38.088Z",
   "portfolio": {
     "org.orangepeelit.product.agent.v1": {
       "lifecycleState": "BACKLOG",
@@ -264,12 +264,12 @@
     },
     "org.orangepeelit.product.kanban.v1": {
       "lifecycleState": "DEPLOYED",
-      "newestCheckpoint": 18,
+      "newestCheckpoint": 24,
       "sourceModel": "portfolio",
       "provenance": {
         "identity": {
-          "checkpoint": 18,
-          "transactionHash": "0aa17f6b531e065f2b131c3b7129cde394036d9d5328c744753d50e7c7c158ee"
+          "checkpoint": 24,
+          "transactionHash": "fad385585103b6aaa0eb0f7870dc788c471eb88399f114e147e657f5eb03d1b0"
         }
       }
     },
