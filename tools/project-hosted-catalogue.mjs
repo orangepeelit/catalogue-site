@@ -35,52 +35,6 @@ async function readJson(url) {
 }
 
 
-function unwrapRecord(operation) {
-  let value =
-    operation?.record ?? null;
-
-  for (
-    let depth = 0;
-    depth < 8;
-    depth++
-  ) {
-
-    if (!value) {
-      return null;
-    }
-
-    if (
-      typeof value === "object" &&
-      typeof value.id === "string"
-    ) {
-      return value;
-    }
-
-    if (
-      typeof value?.record === "object"
-    ) {
-      value =
-        value.record;
-
-      continue;
-    }
-
-    if (
-      typeof value?.value === "object"
-    ) {
-      value =
-        value.value;
-
-      continue;
-    }
-
-    return null;
-  }
-
-  return null;
-}
-
-
 function esc(value) {
   return String(
     value ?? ""
@@ -213,43 +167,10 @@ const lastUpdated =
   );
 
 
-const transactions = [];
-
-let after = 0;
-
-
-while (true) {
-
-  const page =
-    await readJson(
-      `${coreUrl}/v1/core/transactions?after=${after}&limit=500`
-    );
-
-  const rows =
-    page.transactions ?? [];
-
-  if (!rows.length) {
-    break;
-  }
-
-  transactions.push(
-    ...rows
+const page =
+  await readJson(
+    `${coreUrl}/v1/core/records`
   );
-
-  after =
-    Math.max(
-      ...rows.map(
-        row =>
-          Number(
-            row.checkpoint
-          )
-      )
-    );
-
-  if (rows.length < 500) {
-    break;
-  }
-}
 
 
 const current =
@@ -260,52 +181,37 @@ const provenance =
 
 
 for (
-  const transaction
-  of transactions
+  const record
+  of page?.records ?? []
 ) {
 
-  for (
-    const operation
-    of transaction
-      ?.transaction
-      ?.proposal
-      ?.operations ?? []
-  ) {
-
-    if (
-      operation?.kind !==
-      "collection.record.upsert"
-    ) {
-      continue;
-    }
-
-    const record =
-      unwrapRecord(
-        operation
-      );
-
-    if (!record?.id) {
-      continue;
-    }
-
-    current.set(
-      record.id,
-      structuredClone(
-        record
-      )
-    );
-
-    provenance.set(
-      record.id,
-      {
-        checkpoint:
-          transaction.checkpoint,
-
-        transactionHash:
-          transaction.transactionHash
-      }
-    );
+  if (!record?.id) {
+    continue;
   }
+
+  current.set(
+    record.id,
+    structuredClone(
+      record
+    )
+  );
+
+  provenance.set(
+    record.id,
+    {
+      checkpoint:
+        Number(
+          page?.head?.checkpoint ??
+          head.checkpoint ??
+          0
+        ),
+
+      transactionHash:
+        page?.head?.transactionHash ??
+        head.transactionHash ??
+        null
+    }
+  );
 }
 
 
@@ -326,9 +232,27 @@ function isKind(
 }
 
 
-function recordValue(id) {
+function governedLiteralValue(record) {
+  const graphLiteral =
+    record?.["graph:literalObject"];
+
+  if (
+    graphLiteral &&
+    typeof graphLiteral === "object" &&
+    Object.prototype.hasOwnProperty.call(
+      graphLiteral,
+      "value"
+    )
+  ) {
+    return graphLiteral.value;
+  }
+
+  if (graphLiteral !== undefined) {
+    return graphLiteral;
+  }
+
   return (
-    current.get(id)
+    record
       ?.literal
       ?.value ??
     null
@@ -337,20 +261,26 @@ function recordValue(id) {
 
 
 const shell =
-  recordValue(
-    "org.orangepeelit.presentation.microsite-shell.v1"
-  );
+  current.get(
+    "org.orangepeelit.presentation.system.v1"
+  )
+    ?.micrositeShell ??
+  null;
 
 
 const typography =
-  recordValue(
-    "org.orangepeelit.presentation.claim.typography-v1"
+  governedLiteralValue(
+    current.get(
+      "org.orangepeelit.presentation.claim.typography-v1"
+    )
   );
 
 
 const colours =
-  recordValue(
-    "org.orangepeelit.presentation.claim.colours-v1"
+  governedLiteralValue(
+    current.get(
+      "org.orangepeelit.presentation.claim.colours-v1"
+    )
   );
 
 
@@ -403,6 +333,27 @@ function legacyCategory(id) {
 }
 
 
+function assertionSubject(record) {
+  return (
+    record
+      ?.["graph:assertionSubject"]
+      ?.["@id"] ??
+    record?.subjectRef ??
+    null
+  );
+}
+
+
+function assertionLiteral(record) {
+  return (
+    record
+      ?.["graph:literalObject"] ??
+    record?.literal ??
+    null
+  );
+}
+
+
 function assertionsFor(subjectRef) {
   return records.filter(
     record =>
@@ -410,7 +361,9 @@ function assertionsFor(subjectRef) {
         record,
         "Assertion"
       ) &&
-      record.subjectRef ===
+      assertionSubject(
+        record
+      ) ===
         subjectRef
   );
 }
@@ -426,7 +379,9 @@ function claim(
       subjectRef
     ).filter(
       record =>
-        record?.literal?.key ===
+        assertionLiteral(
+          record
+        )?.key ===
         key
     );
 
@@ -440,9 +395,9 @@ function claim(
 
 function literal(record) {
   return (
-    record
-      ?.literal
-      ?.value ??
+    assertionLiteral(
+      record
+    )?.value ??
     null
   );
 }
@@ -579,11 +534,6 @@ const directItems =
           String(
             record?.kind ?? ""
           ).toLowerCase()
-        ) &&
-        String(
-          record?.id ?? ""
-        ).startsWith(
-          "org.orangepeelit.product."
         )
     )
     .map(
